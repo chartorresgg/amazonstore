@@ -7,7 +7,7 @@ package co.edu.poli.amazonstore.model;
  * instancia real de ProductoReal, asegurando que solo los usuarios con
  * el nivel de autorización adecuado puedan ver los detalles del producto.
  */
-public class ProductoProxy implements Producto {
+public class ProductoProxy implements IProducto {
 	
 	protected ProductoReal productoReal; // Instancia real del producto
     private String nombre;

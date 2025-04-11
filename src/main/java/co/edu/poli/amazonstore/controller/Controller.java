@@ -1,12 +1,16 @@
 package co.edu.poli.amazonstore.controller;
 
 import co.edu.poli.amazonstore.model.ClienteFacade;
+import co.edu.poli.amazonstore.model.IProducto;
 import co.edu.poli.amazonstore.model.Producto;
 import co.edu.poli.amazonstore.model.ProductoProxy;
+import co.edu.poli.amazonstore.model.Proveedor;
+import co.edu.poli.amazonstore.model.ProveedorFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -17,14 +21,19 @@ public class Controller {
 
 			txt_nombreproducto, txt_precioproducto,
 
-			txt_nombre, txt_descripcion, txt_nivel;
+			txt_nombre, txt_descripcion, txt_nivel,
+
+			txt_productflyweight, txt_proveedornombre, txt_telefonoproveedor;
 
 	@FXML
 	private Label lbl_infocliente, lbl_nombrecliente, lbl_correocliente, lbl_direccioncliente,
 
 			lbl_tagpedidos, lbl_productonombre, lbl_precioproducto, lbl_tagpagos, lbl_metodopago,
 
-			lbl_nombre, lbl_producto, lbl_autorizacion;
+			lbl_nombre, lbl_producto, lbl_autorizacion,
+
+			lbl_titleflyweight, lbl_productoproveedor, lbl_proveedornombre, lbl_telefonoproveedor, lblEstadoProveedor,
+			lblTotalProveedores;
 
 	@FXML
 	private TextArea txtResultado, area_resultado;
@@ -32,17 +41,24 @@ public class Controller {
 	@FXML
 	private Button btnMostrar, btnActualizar,
 
-			btn_hacerpedido, btn_mostrarpedido, btn_pagoactivo, btn_pagobloqueado, btn_pagosactivos, btn_mostrar;
+			btn_hacerpedido, btn_mostrarpedido, btn_pagoactivo, btn_pagobloqueado, btn_pagosactivos, btn_mostrar,
+
+			btn_agregarproducto;
 
 	@FXML
 	private ComboBox<String> combo_metodospago;
+
+	@FXML
+	private ListView<String> list_fly;
 
 	private ClienteFacade cliente;
 
 	@FXML
 	public void initialize() {
 
-		combo_metodospago.getItems().addAll("Efectivo", "Tarjeta de crédito", "Tarjeta débito", "Transferencia PSE", "PayPal" , "Nequi", "Puntos Colombia");
+		btn_agregarproducto.setOnAction(event -> agregarProducto());
+		combo_metodospago.getItems().addAll("Efectivo", "Tarjeta de crédito", "Tarjeta débito", "Transferencia PSE",
+				"PayPal", "Nequi", "Puntos Colombia");
 
 		// Cliente inicial con datos por defecto
 		cliente = new ClienteFacade("Juan Pérez", "juan@example.com", "Cra 1 #23-45");
@@ -154,8 +170,32 @@ public class Controller {
 			return;
 		}
 
-		Producto producto = new ProductoProxy(nombre, descripcion, nivelAcceso);
+		IProducto producto = new ProductoProxy(nombre, descripcion, nivelAcceso);
 		String resultado = producto.mostrarDetalles();
 		area_resultado.setText(resultado);
 	}
+
+	// FLYWEIGHT PATTERN IMPLEMENTATION
+
+	@FXML
+	 private void agregarProducto() {
+        String nombreProducto = txt_productflyweight.getText();
+        String nombreProveedor = txt_proveedornombre.getText();
+        String contactoProveedor = txt_telefonoproveedor.getText();
+
+        if (nombreProducto.isEmpty() || nombreProveedor.isEmpty() || contactoProveedor.isEmpty()) {
+            // validación simple
+            return;
+        }
+
+        Proveedor proveedor = ProveedorFactory.obtenerProveedor(nombreProveedor, contactoProveedor);
+        Producto producto = new Producto(nombreProducto, proveedor);
+
+        list_fly.getItems().add("Producto: " + nombreProducto + " | Proveedor: " + proveedor.getNombre());
+        
+        // limpiar campos
+        txt_productflyweight.clear();
+        txt_proveedornombre.clear();
+        txt_telefonoproveedor.clear();
+    }
 }

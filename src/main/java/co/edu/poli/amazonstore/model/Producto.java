@@ -1,14 +1,17 @@
 package co.edu.poli.amazonstore.model;
 
-/** 
- * Interfaz que define el contrato para los productos.
- * 
- */
-public interface Producto {
-	
-	/** Método para mostrar los detalles del producto.
-	 * 
-	 * @return
-	 */
-    String mostrarDetalles();
+public class Producto {
+	private String nombreProducto;
+	private Proveedor proveedor;
+
+	public Producto(String nombreProducto, Proveedor proveedor) {
+		this.nombreProducto = nombreProducto;
+		this.proveedor = proveedor;
+	}
+
+	public void mostrarInfo() {
+		System.out.println("Producto: " + nombreProducto);
+		System.out.println("Proveedor: " + proveedor);
+		System.out.println("---------------------------");
+	}
 }

@@ -6,7 +6,7 @@ package co.edu.poli.amazonstore.model;
  * Esta clase implementa la interfaz Producto y proporciona una implementación
  * concreta para mostrar los detalles del producto.
  */
-public class ProductoReal implements Producto {
+public class ProductoReal implements IProducto {
 
 	private String nombre;
 	private String descripcion;

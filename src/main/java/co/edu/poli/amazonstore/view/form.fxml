@@ -3,34 +3,34 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.amazonstore.controller.Controller">
+<AnchorPane fx:id="list_view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.amazonstore.controller.Controller">
    <children>
       <TextField fx:id="txtNombre" layoutX="274.0" layoutY="136.0" promptText="Ingrese el nombre" />
       <TextField fx:id="txtCorreo" layoutX="274.0" layoutY="173.0" promptText="Ingrese el correo" />
       <TextField fx:id="txtDireccion" layoutX="274.0" layoutY="208.0" promptText="Ingrese la dirección" />
       <Button fx:id="btnMostrar" layoutX="174.0" layoutY="247.0" mnemonicParsing="false" onAction="#mostrarInformacion" text="Mostrar" />
       <Button fx:id="btnActualizar" layoutX="240.0" layoutY="247.0" mnemonicParsing="false" onAction="#actualizarInformacion" text="Actualizar" />
-      <TextArea fx:id="txtResultado" layoutX="56.0" layoutY="566.0" prefHeight="118.0" prefWidth="368.0" promptText="Resultado" />
+      <TextArea fx:id="txtResultado" layoutX="56.0" layoutY="566.0" prefHeight="150.0" prefWidth="368.0" promptText="Resultado" />
       <Label fx:id="lbl_nombre" layoutX="571.0" layoutY="141.0" text="Nombre del producto:" />
       <Label fx:id="lbl_producto" layoutX="571.0" layoutY="177.0" text="Descripción del producto:" />
       <Label fx:id="lbl_autorizacion" layoutX="571.0" layoutY="213.0" text="Nivel de autorización del usuario:" />
       <TextField fx:id="txt_nombre" layoutX="768.0" layoutY="136.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre" />
       <TextField fx:id="txt_descripcion" layoutX="768.0" layoutY="173.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el descripción" />
       <TextField fx:id="txt_nivel" layoutX="768.0" layoutY="208.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nivel de autorización" />
-      <Button fx:id="btn_mostrar" layoutX="721.0" layoutY="247.0" mnemonicParsing="false" onAction="#verProducto" text="Mostrar" />
+      <Button fx:id="btn_mostrar" layoutX="726.0" layoutY="247.0" mnemonicParsing="false" onAction="#verProducto" text="Mostrar" />
       <TextArea fx:id="area_resultado" layoutX="571.0" layoutY="287.0" prefHeight="92.0" prefWidth="368.0" />
       <Label fx:id="lbl_titleproxy" layoutX="571.0" layoutY="58.0" text="Proxy Pattern">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lbl_titlefacade" layoutX="56.0" layoutY="58.0" text="Facade Pattern" />
       <Label fx:id="lbl_nombrecliente" layoutX="56.0" layoutY="141.0" text="Nombres del cliente:" />
       <Label fx:id="lbl_correocliente" layoutX="56.0" layoutY="177.0" text="Correo electrónico:" />
       <Label fx:id="lbl_direccioncliente" layoutX="56.0" layoutY="213.0" text="Dirección:" />
@@ -50,6 +50,25 @@
       <Button fx:id="btn_pagobloqueado" layoutX="171.0" layoutY="519.0" mnemonicParsing="false" onAction="#bloquearFormaPago" text="Bloquear" />
       <Button fx:id="btn_pagosactivos" layoutX="276.0" layoutY="519.0" mnemonicParsing="false" onAction="#verFormasPagoActivas" text="Mis Medios de Pago" />
       <TextField fx:id="txt_nombreproducto" layoutX="275.0" layoutY="321.0" promptText="Ingrese el producto" />
-      <Separator layoutX="470.0" layoutY="108.0" orientation="VERTICAL" prefHeight="575.0" prefWidth="6.0" />
+      <Separator layoutX="466.0" layoutY="108.0" orientation="VERTICAL" prefHeight="612.0" prefWidth="10.0" />
+      <Separator layoutX="571.0" layoutY="394.0" prefHeight="3.0" prefWidth="368.0" />
+      <Label fx:id="lbl_titleflyweight" layoutX="571.0" layoutY="409.0" text="Flyweight Pattern">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_titlefacade" layoutX="56.0" layoutY="67.0" text="Pattern Facade">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_productoproveedor" layoutX="571.0" layoutY="454.0" text="Nombre del producto:" />
+      <Label fx:id="lbl_proveedornombre" layoutX="571.0" layoutY="490.0" text="Nombre del proveedor:" />
+      <Label fx:id="lbl_telefonoproveedor" layoutX="571.0" layoutY="526.0" text="Teléfono del proveedor:" />
+      <TextField fx:id="txt_productflyweight" layoutX="768.0" layoutY="450.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre" />
+      <TextField fx:id="txt_proveedornombre" layoutX="768.0" layoutY="486.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre del proveedor" />
+      <TextField fx:id="txt_telefonoproveedor" layoutX="768.0" layoutY="522.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el teléfono" />
+      <Button fx:id="btn_agregarproducto" layoutX="566.0" layoutY="566.0" mnemonicParsing="false" onAction="#agregarProducto" text="Agregar Producto" />
+      <ListView fx:id="list_fly" layoutX="571.0" layoutY="605.0" prefHeight="114.0" prefWidth="368.0" />
    </children>
 </AnchorPane>
