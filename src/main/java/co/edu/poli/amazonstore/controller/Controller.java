@@ -178,24 +178,40 @@ public class Controller {
 	// FLYWEIGHT PATTERN IMPLEMENTATION
 
 	@FXML
-	 private void agregarProducto() {
-        String nombreProducto = txt_productflyweight.getText();
-        String nombreProveedor = txt_proveedornombre.getText();
-        String contactoProveedor = txt_telefonoproveedor.getText();
+	private void agregarProducto() {
+		String nombreProducto = txt_productflyweight.getText().trim();
+		String nombreProveedor = txt_proveedornombre.getText().trim();
+		String contactoProveedor = txt_telefonoproveedor.getText().trim();
 
-        if (nombreProducto.isEmpty() || nombreProveedor.isEmpty() || contactoProveedor.isEmpty()) {
-            // validación simple
-            return;
-        }
+		if (nombreProducto.isEmpty() || nombreProveedor.isEmpty() || contactoProveedor.isEmpty()) {
+			// validación simple
+			return;
+		}
 
-        Proveedor proveedor = ProveedorFactory.obtenerProveedor(nombreProveedor, contactoProveedor);
-        Producto producto = new Producto(nombreProducto, proveedor);
+		// Verificar si es un proveedor nuevo
+		boolean esNuevoProveedor = !ProveedorFactory.proveedorExiste(nombreProveedor, contactoProveedor);
 
-        list_fly.getItems().add("Producto: " + nombreProducto + " | Proveedor: " + proveedor.getNombre());
-        
-        // limpiar campos
-        txt_productflyweight.clear();
-        txt_proveedornombre.clear();
-        txt_telefonoproveedor.clear();
-    }
+		// Obtener (o reutilizar) el proveedor
+		Proveedor proveedor = ProveedorFactory.obtenerProveedor(nombreProveedor, contactoProveedor);
+		Producto producto = new Producto(nombreProducto, proveedor);
+
+		// Mostrar en la interfaz
+		list_fly.getItems().add("Producto: " + nombreProducto + " | Proveedor: " + proveedor.getNombre()
+				+ " | Contacto: " + proveedor.getContacto());
+
+		// Mostrar estado del proveedor
+		if (esNuevoProveedor) {
+			lblEstadoProveedor.setText("✅ Nuevo proveedor registrado.");
+		} else {
+			lblEstadoProveedor.setText("♻️ Proveedor ya existente reutilizado.");
+		}
+
+		// Mostrar total de proveedores únicos
+		lblTotalProveedores.setText("Proveedores únicos: " + ProveedorFactory.contarProveedores());
+
+		// Limpiar campos
+		txt_productflyweight.clear();
+		txt_proveedornombre.clear();
+		txt_telefonoproveedor.clear();
+	}
 }

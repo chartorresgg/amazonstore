@@ -25,7 +25,7 @@
       <TextField fx:id="txt_descripcion" layoutX="768.0" layoutY="173.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el descripción" />
       <TextField fx:id="txt_nivel" layoutX="768.0" layoutY="208.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nivel de autorización" />
       <Button fx:id="btn_mostrar" layoutX="726.0" layoutY="247.0" mnemonicParsing="false" onAction="#verProducto" text="Mostrar" />
-      <TextArea fx:id="area_resultado" layoutX="571.0" layoutY="287.0" prefHeight="92.0" prefWidth="368.0" />
+      <TextArea fx:id="area_resultado" layoutX="571.0" layoutY="287.0" prefHeight="90.0" prefWidth="368.0" />
       <Label fx:id="lbl_titleproxy" layoutX="571.0" layoutY="58.0" text="Proxy Pattern">
          <font>
             <Font name="System Bold Italic" size="12.0" />
@@ -69,6 +69,8 @@
       <TextField fx:id="txt_proveedornombre" layoutX="768.0" layoutY="486.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre del proveedor" />
       <TextField fx:id="txt_telefonoproveedor" layoutX="768.0" layoutY="522.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el teléfono" />
       <Button fx:id="btn_agregarproducto" layoutX="566.0" layoutY="566.0" mnemonicParsing="false" onAction="#agregarProducto" text="Agregar Producto" />
-      <ListView fx:id="list_fly" layoutX="571.0" layoutY="605.0" prefHeight="114.0" prefWidth="368.0" />
+      <ListView fx:id="list_fly" layoutX="571.0" layoutY="605.0" prefHeight="84.0" prefWidth="368.0" />
+      <Label fx:id="lblEstadoProveedor" layoutX="727.0" layoutY="701.0" text="Estado del proveedor" />
+      <Label fx:id="lblTotalProveedores" layoutX="572.0" layoutY="701.0" text="Cantidad de proveedores" />
    </children>
 </AnchorPane>
