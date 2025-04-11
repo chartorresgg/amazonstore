@@ -6,37 +6,37 @@ public class ClienteFacade {
 	private HistorialPedidos historialPedidos;
 	private FormasPago formasPago;
 
-	public ClienteFacade(String nombre, String correo, String direccion) {
-        this.informacionPersonal = new InformacionPersonal(nombre, correo, direccion);
-        this.historialPedidos = new HistorialPedidos();
-        this.formasPago = new FormasPago();
-    }
-
-	public String actualizarInformacionCliente(String nombre, String correo, String direccion) {
-		return informacionPersonal.actualizarInformacion(nombre, correo, direccion);
+	public ClienteFacade(InformacionPersonal informacionPersonal, HistorialPedidos historialPedidos,
+			FormasPago formasPago) {
+		this.informacionPersonal = informacionPersonal;
+		this.historialPedidos = historialPedidos;
+		this.formasPago = formasPago;
 	}
 
-	public String mostrarInformacionCliente() {
-		return informacionPersonal.mostrarInformacion();
+	
+	public String gestionarInformacionCliente(String nombre, String correo, String direccion) {
+		
+		if (!nombre.isEmpty() && !correo.isEmpty() && !direccion.isEmpty()) {
+			
+			return informacionPersonal.actualizarInformacion(nombre, correo, direccion);
+		} else {
+			return informacionPersonal.mostrarInformacion();
+		}
 	}
 
-	public String mostrarHistorialPedidos() {
+	// Método simplificado para procesar un nuevo pedido y devolver el historial
+	public String procesarPedido(String pedido) {
+		historialPedidos.realizarPedido(pedido);
 		return historialPedidos.mostrarHistorial();
 	}
 
-	public String realizarNuevoPedido(String pedido) {
-		return historialPedidos.realizarPedido(pedido);
-	}
-
-	public String verFormasDePago() {
+	// Método simplificado para gestionar métodos de pago (activar y visualizar)
+	public String gestionarMetodoPago(String metodo, boolean activar) {
+		if (activar) {
+			formasPago.activarFormaPago(metodo);
+		} else {
+			formasPago.bloquearFormaPago(metodo);
+		}
 		return formasPago.visualizarFormasPago();
-	}
-
-	public String activarPago(String metodo) {
-		return formasPago.activarFormaPago(metodo);
-	}
-
-	public String bloquearPago(String metodo) {
-		return formasPago.bloquearFormaPago(metodo);
 	}
 }

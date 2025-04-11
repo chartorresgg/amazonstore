@@ -4,29 +4,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProveedorFactory {
-	private static final Map<String, Proveedor> proveedores = new HashMap<>();
 
-	private static String generarClave(String nombre, String contacto) {
-		return (nombre.trim() + "_" + contacto.trim()).toLowerCase();
+	private final Map<Integer, Proveedor> proveedores;
+
+	public ProveedorFactory() {
+		this.proveedores = new HashMap<>();
 	}
 
-	public static Proveedor obtenerProveedor(String nombre, String contacto) {
-		String clave = generarClave(nombre, contacto);
+	public Proveedor obtenerProveedor(String nombre, String contacto) {
+
+		Proveedor proveedorTemp = new Proveedor(nombre.trim(), contacto.trim());
+		int clave = proveedorTemp.hashCode();
+
 		if (!proveedores.containsKey(clave)) {
-			proveedores.put(clave, new Proveedor(nombre.trim(), contacto.trim()));
+			proveedores.put(clave, proveedorTemp);
 			System.out.println("Nuevo proveedor creado.");
 		} else {
 			System.out.println("Proveedor ya existente reutilizado.");
 		}
+
 		return proveedores.get(clave);
 	}
 
-	public static boolean proveedorExiste(String nombre, String contacto) {
-		String clave = generarClave(nombre, contacto);
-		return proveedores.containsKey(clave);
+	public boolean proveedorExiste(String nombre, String contacto) {
+		Proveedor proveedorTemp = new Proveedor(nombre.trim(), contacto.trim());
+		return proveedores.containsKey(proveedorTemp.hashCode());
 	}
 
-	public static int contarProveedores() {
+	public int contarProveedores() {
 		return proveedores.size();
 	}
 }

@@ -48,7 +48,7 @@
       <ComboBox fx:id="combo_metodospago" layoutX="275.0" layoutY="482.0" prefWidth="150.0" promptText="Despliegue" />
       <Button fx:id="btn_pagoactivo" layoutX="89.0" layoutY="519.0" mnemonicParsing="false" onAction="#activarFormaPago" text="Activar" />
       <Button fx:id="btn_pagobloqueado" layoutX="171.0" layoutY="519.0" mnemonicParsing="false" onAction="#bloquearFormaPago" text="Bloquear" />
-      <Button fx:id="btn_pagosactivos" layoutX="276.0" layoutY="519.0" mnemonicParsing="false" onAction="#verFormasPagoActivas" text="Mis Medios de Pago" />
+      <Button fx:id="btn_pagosactivos" layoutX="276.0" layoutY="519.0" mnemonicParsing="false" onAction="#verFormasPagoActivas" text="Visualizar" />
       <TextField fx:id="txt_nombreproducto" layoutX="275.0" layoutY="321.0" promptText="Ingrese el producto" />
       <Separator layoutX="466.0" layoutY="108.0" orientation="VERTICAL" prefHeight="612.0" prefWidth="10.0" />
       <Separator layoutX="571.0" layoutY="394.0" prefHeight="3.0" prefWidth="368.0" />

@@ -1,7 +1,10 @@
 package co.edu.poli.amazonstore.controller;
 
 import co.edu.poli.amazonstore.model.ClienteFacade;
+import co.edu.poli.amazonstore.model.FormasPago;
+import co.edu.poli.amazonstore.model.HistorialPedidos;
 import co.edu.poli.amazonstore.model.IProducto;
+import co.edu.poli.amazonstore.model.InformacionPersonal;
 import co.edu.poli.amazonstore.model.Producto;
 import co.edu.poli.amazonstore.model.ProductoProxy;
 import co.edu.poli.amazonstore.model.Proveedor;
@@ -56,12 +59,27 @@ public class Controller {
 	@FXML
 	public void initialize() {
 
-		btn_agregarproducto.setOnAction(event -> agregarProducto());
-		combo_metodospago.getItems().addAll("Efectivo", "Tarjeta de crédito", "Tarjeta débito", "Transferencia PSE",
-				"PayPal", "Nequi", "Puntos Colombia");
+		// Crear instancias de los subsistemas
+		InformacionPersonal info = new InformacionPersonal("Juan Pérez", "juan@email.com", "Calle 123");
+		HistorialPedidos historial = new HistorialPedidos();
+		FormasPago formas = new FormasPago();
 
-		// Cliente inicial con datos por defecto
-		cliente = new ClienteFacade("Juan Pérez", "juan@example.com", "Cra 1 #23-45");
+		// Inyectar al ClienteFacade con la nueva lógica simplificada
+		cliente = new ClienteFacade(info, historial, formas);
+
+		// Configurar elementos de la interfaz gráfica
+		btn_agregarproducto.setOnAction(event -> agregarProducto());
+
+		combo_metodospago.getItems().addAll(
+			"Efectivo",
+			"Tarjeta de crédito",
+			"Tarjeta débito",
+			"Transferencia PSE",
+			"PayPal",
+			"Nequi",
+			"Puntos Colombia"
+		);
+
 	}
 
 	// FACADE PATTERN IMPLEMENTATION
@@ -70,11 +88,9 @@ public class Controller {
 
 	@FXML
 	private void mostrarInformacion() {
-		String info = cliente.mostrarInformacionCliente();
+		// Solo mostramos la información sin actualizar
+		String info = cliente.gestionarInformacionCliente("", "", "");
 		txtResultado.setText(info);
-
-		// También puedes llenar los campos con la info actual
-		// (Esto requiere parsear el texto, pero aquí lo mantenemos simple)
 	}
 
 	@FXML
@@ -83,7 +99,7 @@ public class Controller {
 		String correo = txtCorreo.getText();
 		String direccion = txtDireccion.getText();
 
-		String resultado = cliente.actualizarInformacionCliente(nombre, correo, direccion);
+		String resultado = cliente.gestionarInformacionCliente(nombre, correo, direccion);
 		txtResultado.setText(resultado);
 	}
 
@@ -100,17 +116,18 @@ public class Controller {
 		}
 
 		String pedido = "Producto: " + nombreProducto + ", Precio: $" + precioProducto;
-		String resultado = cliente.realizarNuevoPedido(pedido);
+		String resultado = cliente.procesarPedido(pedido);
 		txtResultado.setText(resultado);
 
-		// Limpiar campos después de realizar pedido
+		// Limpiar campos
 		txt_nombreproducto.clear();
 		txt_precioproducto.clear();
 	}
 
 	@FXML
 	private void mostrarPedidos() {
-		String resultado = cliente.mostrarHistorialPedidos();
+		// Para solo mostrar el historial sin nuevo pedido
+		String resultado = cliente.procesarPedido(""); // Se puede ajustar para que no agregue nada si string vacío
 		txtResultado.setText(resultado);
 	}
 
@@ -125,7 +142,7 @@ public class Controller {
 			return;
 		}
 
-		String resultado = cliente.activarPago(metodo);
+		String resultado = cliente.gestionarMetodoPago(metodo, true);
 		txtResultado.setText(resultado);
 	}
 
@@ -138,13 +155,14 @@ public class Controller {
 			return;
 		}
 
-		String resultado = cliente.bloquearPago(metodo);
+		String resultado = cliente.gestionarMetodoPago(metodo, false);
 		txtResultado.setText(resultado);
 	}
 
 	@FXML
 	private void verFormasPagoActivas() {
-		String resultado = cliente.verFormasDePago();
+		// Solo visualizar sin activar ni bloquear
+		String resultado = cliente.gestionarMetodoPago("", true); // Parámetro puede ignorarse si "" no tiene efecto
 		txtResultado.setText(resultado);
 	}
 
@@ -177,6 +195,9 @@ public class Controller {
 
 	// FLYWEIGHT PATTERN IMPLEMENTATION
 
+	// Suponiendo que tienes una instancia de la fábrica:
+	private final ProveedorFactory proveedorFactory = new ProveedorFactory();
+
 	@FXML
 	private void agregarProducto() {
 		String nombreProducto = txt_productflyweight.getText().trim();
@@ -189,10 +210,10 @@ public class Controller {
 		}
 
 		// Verificar si es un proveedor nuevo
-		boolean esNuevoProveedor = !ProveedorFactory.proveedorExiste(nombreProveedor, contactoProveedor);
+		boolean esNuevoProveedor = !proveedorFactory.proveedorExiste(nombreProveedor, contactoProveedor);
 
 		// Obtener (o reutilizar) el proveedor
-		Proveedor proveedor = ProveedorFactory.obtenerProveedor(nombreProveedor, contactoProveedor);
+		Proveedor proveedor = proveedorFactory.obtenerProveedor(nombreProveedor, contactoProveedor);
 		Producto producto = new Producto(nombreProducto, proveedor);
 
 		// Mostrar en la interfaz
@@ -207,11 +228,12 @@ public class Controller {
 		}
 
 		// Mostrar total de proveedores únicos
-		lblTotalProveedores.setText("Proveedores únicos: " + ProveedorFactory.contarProveedores());
+		lblTotalProveedores.setText("Proveedores únicos: " + proveedorFactory.contarProveedores());
 
 		// Limpiar campos
 		txt_productflyweight.clear();
 		txt_proveedornombre.clear();
 		txt_telefonoproveedor.clear();
 	}
+
 }
