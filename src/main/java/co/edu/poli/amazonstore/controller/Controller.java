@@ -1,10 +1,11 @@
 package co.edu.poli.amazonstore.controller;
 
-import co.edu.poli.amazonstore.model.Cliente;
+import co.edu.poli.amazonstore.model.ClienteFacade;
 import co.edu.poli.amazonstore.model.Producto;
 import co.edu.poli.amazonstore.model.ProductoProxy;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -12,24 +13,44 @@ import javafx.scene.control.TextField;
 public class Controller {
 
 	@FXML
-	private TextField txtNombre, txtCorreo, txtDireccion, txt_nombre, txt_descripcion, txt_nivel;
+	private TextField txtNombre, txtCorreo, txtDireccion,
+
+			txt_nombreproducto, txt_precioproducto,
+
+			txt_nombre, txt_descripcion, txt_nivel;
 
 	@FXML
-	private Label lbl_nombre, lbl_producto, lbl_autorizacion;
+	private Label lbl_infocliente, lbl_nombrecliente, lbl_correocliente, lbl_direccioncliente,
+
+			lbl_tagpedidos, lbl_productonombre, lbl_precioproducto, lbl_tagpagos, lbl_metodopago,
+
+			lbl_nombre, lbl_producto, lbl_autorizacion;
 
 	@FXML
 	private TextArea txtResultado, area_resultado;
 
 	@FXML
-	private Button btnMostrar, btnActualizar, btn_mostrar;
+	private Button btnMostrar, btnActualizar,
 
-	private Cliente cliente;
+			btn_hacerpedido, btn_mostrarpedido, btn_pagoactivo, btn_pagobloqueado, btn_pagosactivos, btn_mostrar;
+
+	@FXML
+	private ComboBox<String> combo_metodospago;
+
+	private ClienteFacade cliente;
 
 	@FXML
 	public void initialize() {
+
+		combo_metodospago.getItems().addAll("Efectivo", "Tarjeta de crédito", "Tarjeta débito", "Transferencia PSE", "PayPal" , "Nequi", "Puntos Colombia");
+
 		// Cliente inicial con datos por defecto
-		cliente = new Cliente("Juan Pérez", "juan@example.com", "Cra 1 #23-45");
+		cliente = new ClienteFacade("Juan Pérez", "juan@example.com", "Cra 1 #23-45");
 	}
+
+	// FACADE PATTERN IMPLEMENTATION
+
+	// Información personal del cliente
 
 	@FXML
 	private void mostrarInformacion() {
@@ -50,7 +71,68 @@ public class Controller {
 		txtResultado.setText(resultado);
 	}
 
-	// Proxy
+	// Pedidos del cliente
+
+	@FXML
+	private void realizarPedido() {
+		String nombreProducto = txt_nombreproducto.getText();
+		String precioProducto = txt_precioproducto.getText();
+
+		if (nombreProducto.isEmpty() || precioProducto.isEmpty()) {
+			txtResultado.setText("⚠️ Debes ingresar el nombre del producto y su precio.");
+			return;
+		}
+
+		String pedido = "Producto: " + nombreProducto + ", Precio: $" + precioProducto;
+		String resultado = cliente.realizarNuevoPedido(pedido);
+		txtResultado.setText(resultado);
+
+		// Limpiar campos después de realizar pedido
+		txt_nombreproducto.clear();
+		txt_precioproducto.clear();
+	}
+
+	@FXML
+	private void mostrarPedidos() {
+		String resultado = cliente.mostrarHistorialPedidos();
+		txtResultado.setText(resultado);
+	}
+
+	// Métodos de pago del cliente
+
+	@FXML
+	private void activarFormaPago() {
+		String metodo = combo_metodospago.getValue();
+
+		if (metodo == null) {
+			txtResultado.setText("⚠️ Selecciona un método de pago para activarlo.");
+			return;
+		}
+
+		String resultado = cliente.activarPago(metodo);
+		txtResultado.setText(resultado);
+	}
+
+	@FXML
+	private void bloquearFormaPago() {
+		String metodo = combo_metodospago.getValue();
+
+		if (metodo == null) {
+			txtResultado.setText("⚠️ Selecciona un método de pago para bloquearlo.");
+			return;
+		}
+
+		String resultado = cliente.bloquearPago(metodo);
+		txtResultado.setText(resultado);
+	}
+
+	@FXML
+	private void verFormasPagoActivas() {
+		String resultado = cliente.verFormasDePago();
+		txtResultado.setText(resultado);
+	}
+
+	// PROXY PATTERN IMPLEMENTATION
 
 	@FXML
 	private void verProducto() {

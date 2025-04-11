@@ -1,12 +1,12 @@
 package co.edu.poli.amazonstore.model;
 
-public class Cliente {
+public class ClienteFacade {
 
 	private InformacionPersonal informacionPersonal;
 	private HistorialPedidos historialPedidos;
 	private FormasPago formasPago;
 
-	public Cliente(String nombre, String correo, String direccion) {
+	public ClienteFacade(String nombre, String correo, String direccion) {
         this.informacionPersonal = new InformacionPersonal(nombre, correo, direccion);
         this.historialPedidos = new HistorialPedidos();
         this.formasPago = new FormasPago();

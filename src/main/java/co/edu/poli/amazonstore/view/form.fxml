@@ -1,32 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.amazonstore.controller.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.amazonstore.controller.Controller">
    <children>
-      <TextField fx:id="txtNombre" layoutX="176.0" layoutY="137.0" promptText="Nombres del cliente" />
-      <TextField fx:id="txtCorreo" layoutX="176.0" layoutY="173.0" promptText="Correo del cliente" />
-      <TextField fx:id="txtDireccion" layoutX="176.0" layoutY="208.0" promptText="Dirección del cliente" />
-      <Button fx:id="btnMostrar" layoutX="106.0" layoutY="247.0" mnemonicParsing="false" onAction="#mostrarInformacion" text="Mostrar" />
-      <Button fx:id="btnActualizar" layoutX="188.0" layoutY="247.0" mnemonicParsing="false" onAction="#actualizarInformacion" text="Actualizar" />
-      <TextArea fx:id="txtResultado" layoutX="50.0" layoutY="287.0" prefHeight="186.0" prefWidth="276.0" promptText="Resultado" />
+      <TextField fx:id="txtNombre" layoutX="274.0" layoutY="136.0" promptText="Ingrese el nombre" />
+      <TextField fx:id="txtCorreo" layoutX="274.0" layoutY="173.0" promptText="Ingrese el correo" />
+      <TextField fx:id="txtDireccion" layoutX="274.0" layoutY="208.0" promptText="Ingrese la dirección" />
+      <Button fx:id="btnMostrar" layoutX="174.0" layoutY="247.0" mnemonicParsing="false" onAction="#mostrarInformacion" text="Mostrar" />
+      <Button fx:id="btnActualizar" layoutX="240.0" layoutY="247.0" mnemonicParsing="false" onAction="#actualizarInformacion" text="Actualizar" />
+      <TextArea fx:id="txtResultado" layoutX="56.0" layoutY="566.0" prefHeight="118.0" prefWidth="368.0" promptText="Resultado" />
       <Label fx:id="lbl_nombre" layoutX="571.0" layoutY="141.0" text="Nombre del producto:" />
       <Label fx:id="lbl_producto" layoutX="571.0" layoutY="177.0" text="Descripción del producto:" />
-      <Label fx:id="lbl_autorizacion" layoutX="571.0" layoutY="212.0" text="Nivel de autorización del usuario:" />
+      <Label fx:id="lbl_autorizacion" layoutX="571.0" layoutY="213.0" text="Nivel de autorización del usuario:" />
       <TextField fx:id="txt_nombre" layoutX="768.0" layoutY="136.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre" />
       <TextField fx:id="txt_descripcion" layoutX="768.0" layoutY="173.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el descripción" />
       <TextField fx:id="txt_nivel" layoutX="768.0" layoutY="208.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nivel de autorización" />
       <Button fx:id="btn_mostrar" layoutX="721.0" layoutY="247.0" mnemonicParsing="false" onAction="#verProducto" text="Mostrar" />
       <TextArea fx:id="area_resultado" layoutX="571.0" layoutY="287.0" prefHeight="92.0" prefWidth="368.0" />
-      <Label layoutX="571.0" layoutY="96.0" text="Proxy Pattern">
+      <Label fx:id="lbl_titleproxy" layoutX="571.0" layoutY="58.0" text="Proxy Pattern">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
+      <Label fx:id="lbl_titlefacade" layoutX="56.0" layoutY="58.0" text="Facade Pattern" />
+      <Label fx:id="lbl_nombrecliente" layoutX="56.0" layoutY="141.0" text="Nombres del cliente:" />
+      <Label fx:id="lbl_correocliente" layoutX="56.0" layoutY="177.0" text="Correo electrónico:" />
+      <Label fx:id="lbl_direccioncliente" layoutX="56.0" layoutY="213.0" text="Dirección:" />
+      <Label fx:id="lbl_infocliente" layoutX="56.0" layoutY="105.0" text="📋 Información del Cliente" />
+      <Separator layoutX="59.0" layoutY="285.0" prefHeight="1.0" prefWidth="361.0" />
+      <Label fx:id="lbl_tagpedidos" layoutX="53.0" layoutY="297.0" text="📦 Pedidos" />
+      <Label fx:id="lbl_productonombre" layoutX="56.0" layoutY="325.0" text="Nombre del producto:" />
+      <Label fx:id="lbl_precioproducto" layoutX="56.0" layoutY="361.0" text="Precio del producto:" />
+      <TextField fx:id="txt_precioproducto" layoutX="275.0" layoutY="357.0" promptText="Ingrese el precio" />
+      <Button fx:id="btn_hacerpedido" layoutX="142.0" layoutY="392.0" mnemonicParsing="false" onAction="#realizarPedido" text="Hacer pedido" />
+      <Button fx:id="btn_mostrarpedido" layoutX="240.0" layoutY="392.0" mnemonicParsing="false" onAction="#mostrarPedidos" text="Mostrar pedido" />
+      <Separator layoutX="63.0" layoutY="439.0" prefHeight="3.0" prefWidth="362.0" />
+      <Label fx:id="lbl_tagpagos" layoutX="56.0" layoutY="454.0" text="💳 Formas de Pago" />
+      <Label fx:id="lbl_metodopago" layoutX="56.0" layoutY="486.0" text="Seleccione el método de pago:" />
+      <ComboBox fx:id="combo_metodospago" layoutX="275.0" layoutY="482.0" prefWidth="150.0" promptText="Despliegue" />
+      <Button fx:id="btn_pagoactivo" layoutX="89.0" layoutY="519.0" mnemonicParsing="false" onAction="#activarFormaPago" text="Activar" />
+      <Button fx:id="btn_pagobloqueado" layoutX="171.0" layoutY="519.0" mnemonicParsing="false" onAction="#bloquearFormaPago" text="Bloquear" />
+      <Button fx:id="btn_pagosactivos" layoutX="276.0" layoutY="519.0" mnemonicParsing="false" onAction="#verFormasPagoActivas" text="Mis Medios de Pago" />
+      <TextField fx:id="txt_nombreproducto" layoutX="275.0" layoutY="321.0" promptText="Ingrese el producto" />
+      <Separator layoutX="470.0" layoutY="108.0" orientation="VERTICAL" prefHeight="575.0" prefWidth="6.0" />
    </children>
 </AnchorPane>
