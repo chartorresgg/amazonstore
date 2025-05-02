@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Caretaker {
+    
     private Map<String, Map<Integer, Memento>> historial = new HashMap<>();
 
     public void guardarMemento(String nombreProducto, Memento memento) {

@@ -6,6 +6,7 @@ import co.edu.poli.amazonstore.model.FormasPago;
 import co.edu.poli.amazonstore.model.HistorialPedidos;
 import co.edu.poli.amazonstore.model.IProducto;
 import co.edu.poli.amazonstore.model.InformacionPersonal;
+import co.edu.poli.amazonstore.model.Memento;
 import co.edu.poli.amazonstore.model.NotificadorPrecio;
 import co.edu.poli.amazonstore.model.Producto;
 import co.edu.poli.amazonstore.model.ProductoProxy;
@@ -265,56 +266,103 @@ public class Controller {
 
 	// Método para agregar un producto
     @FXML
-    public void addProduct() {
-        String nombre = txt_productname.getText();
-        String proveedor = txt_providername.getText();
-        double precioInicial = Double.parseDouble(txt_precioinicial.getText());
+public void addProduct() {
+    String nombre = txt_productname.getText();
+    String proveedor = txt_providername.getText();
+    String precioTexto = txt_precioinicial.getText();
 
-        // Crear nuevo producto y agregarlo a la lista
-        Producto producto = new Producto(nombre, new Proveedor(proveedor, "Contacto del proveedor"), precioInicial);
-        productos.add(producto);
-
-        // Actualizar la lista de productos en la interfaz
-        listViewProductos.setItems(productos);
-        comboBoxProducto.setItems(productos);
-        comboBoxRestaurarProducto.setItems(productos);
-        comboBoxMostrarProducto.setItems(productos);
-
-        // Limpiar campos
-        txt_productname.clear();
-        txt_providername.clear();
-        txt_precioinicial.clear();
+    if (nombre.isEmpty() || proveedor.isEmpty() || precioTexto.isEmpty()) {
+        txtResultado.setText("⚠️ Debes completar todos los campos antes de agregar un producto.");
+        return;
     }
+
+    double precioInicial;
+    try {
+        precioInicial = Double.parseDouble(precioTexto);
+    } catch (NumberFormatException e) {
+        txtResultado.setText("⚠️ El precio debe ser un número válido.");
+        return;
+    }
+
+    Producto producto = new Producto(nombre, new Proveedor(proveedor, "Contacto del proveedor"), precioInicial);
+    productos.add(producto);
+    notificador.agregarProducto(producto);
+
+    // Actualizar interfaces
+    listViewProductos.setItems(productos);
+    comboBoxProducto.setItems(productos);
+    comboBoxRestaurarProducto.setItems(productos);
+    comboBoxMostrarProducto.setItems(productos);
+
+    // Seleccionar el nuevo producto por defecto
+    comboBoxMostrarProducto.getSelectionModel().select(producto);
+
+    // Limpiar campos
+    txt_productname.clear();
+    txt_providername.clear();
+    txt_precioinicial.clear();
+
+    txtResultado.setText("✅ Producto agregado: " + producto.getNombreProducto() + " con precio $" + producto.getPrecioActual());
+    System.out.println("Producto agregado: " + producto); // Debug
+}
+
 
     // Método para aplicar aumento o baja de precio
     @FXML
-    public void aplicarAjustePrecio() {
-        Producto productoSeleccionado = comboBoxProducto.getValue();
-        double porcentaje = Double.parseDouble(txt_definirporcentaje.getText());
+public void aplicarAjustePrecio() {
+    double porcentaje = Double.parseDouble(txt_definirporcentaje.getText());
+    int añoActual = java.time.Year.now().getValue();  // Año actual
 
-        // Notificar al producto para que ajuste el precio
-        notificador.notificarAumento(porcentaje);
-        productoSeleccionado.actualizarPrecio(porcentaje);
+    for (Producto producto : productos) {
+        double precioAntes = producto.getPrecioActual();
 
-        // Limpiar campo de porcentaje
-        txt_definirporcentaje.clear();
+        // Guardar el estado antes del ajuste
+        Memento memento = new Memento(precioAntes, añoActual);
+        caretaker.guardarMemento(producto.getNombreProducto(), memento);
+        producto.guardarEstado(añoActual);  // Guardar también en el historial del producto
+
+        // Aplicar el cambio de precio
+        producto.actualizarPrecio(porcentaje);
+
+        double precioDespues = producto.getPrecioActual();
+        System.out.println("💲 Producto: " + producto.getNombreProducto() +
+            " | Año: " + añoActual +
+            " | Precio antes: $" + precioAntes +
+            " | Precio después: $" + precioDespues +
+            " | Cambio: " + (porcentaje > 0 ? "+" : "") + porcentaje + "%");
     }
+
+    txt_definirporcentaje.clear();
+}
+
 
     // Método para restaurar el precio de un producto a un año específico
     @FXML
-    public void restaurarPrecio() {
-        Producto productoSeleccionado = comboBoxRestaurarProducto.getValue();
-        int anio = Integer.parseInt(txtAnioRestaurar.getText());
+public void restaurarPrecio() {
+    Producto productoSeleccionado = comboBoxRestaurarProducto.getValue();
+    int anio = Integer.parseInt(txtAnioRestaurar.getText()); // Año ingresado por el usuario
 
-        // Restaurar el precio del producto
+    // Restaurar el precio del producto
+    if (productoSeleccionado != null) {
         productoSeleccionado.restaurarEstado(anio);
     }
+}
 
     // Método para mostrar el precio actual del producto
     @FXML
-    public void mostrarPrecio() {
-        Producto productoSeleccionado = comboBoxMostrarProducto.getValue();
-        System.out.println("Precio actual de " + productoSeleccionado + ": " + productoSeleccionado.getPrecioActual());
+public void mostrarPrecio() {
+    System.out.println("Contenido del ComboBox: " + comboBoxMostrarProducto.getItems());
+
+    Producto productoSeleccionado = comboBoxMostrarProducto.getValue();
+    System.out.println("Producto seleccionado: " + productoSeleccionado);
+
+    if (productoSeleccionado == null) {
+        txtResultado.setText("⚠️ Debes seleccionar un producto para ver su precio.");
+        return;
     }
 
+    txtResultado.setText("💲 Precio actual de " + productoSeleccionado.getNombreProducto() + ": $" + productoSeleccionado.getPrecioActual());
+}
+
+	
 }

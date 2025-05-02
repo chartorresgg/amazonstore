@@ -27,8 +27,12 @@ public class Producto implements Subscriber{
         Memento memento = historialPrecios.get(año);
         if (memento != null) {
             this.precioActual = memento.getPrecio();
+            System.out.println("✅ Precio restaurado a: " + precioActual + " del año " + año);
+        } else {
+            System.out.println("⚠️ No se encontró memento para el año: " + año);
         }
     }
+    
 
 	 // OBSERVER - Notificación de cambio de precio
 	 @Override
