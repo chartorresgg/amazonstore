@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="list_view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.amazonstore.controller.Controller">
+<AnchorPane fx:id="list_view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.amazonstore.controller.Controller">
    <children>
       <TextField fx:id="txtNombre" layoutX="274.0" layoutY="136.0" promptText="Ingrese el nombre" />
       <TextField fx:id="txtCorreo" layoutX="274.0" layoutY="173.0" promptText="Ingrese el correo" />
@@ -18,15 +18,15 @@
       <Button fx:id="btnMostrar" layoutX="174.0" layoutY="247.0" mnemonicParsing="false" onAction="#mostrarInformacion" text="Mostrar" />
       <Button fx:id="btnActualizar" layoutX="240.0" layoutY="247.0" mnemonicParsing="false" onAction="#actualizarInformacion" text="Actualizar" />
       <TextArea fx:id="txtResultado" layoutX="56.0" layoutY="566.0" prefHeight="150.0" prefWidth="368.0" promptText="Resultado" />
-      <Label fx:id="lbl_nombre" layoutX="571.0" layoutY="141.0" text="Nombre del producto:" />
-      <Label fx:id="lbl_producto" layoutX="571.0" layoutY="177.0" text="Descripción del producto:" />
-      <Label fx:id="lbl_autorizacion" layoutX="571.0" layoutY="213.0" text="Nivel de autorización del usuario:" />
-      <TextField fx:id="txt_nombre" layoutX="768.0" layoutY="136.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre" />
-      <TextField fx:id="txt_descripcion" layoutX="768.0" layoutY="173.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el descripción" />
-      <TextField fx:id="txt_nivel" layoutX="768.0" layoutY="208.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nivel de autorización" />
-      <Button fx:id="btn_mostrar" layoutX="726.0" layoutY="247.0" mnemonicParsing="false" onAction="#verProducto" text="Mostrar" />
-      <TextArea fx:id="area_resultado" layoutX="571.0" layoutY="287.0" prefHeight="90.0" prefWidth="368.0" />
-      <Label fx:id="lbl_titleproxy" layoutX="571.0" layoutY="58.0" text="Proxy Pattern">
+      <Label fx:id="lbl_nombre" layoutX="490.0" layoutY="145.0" text="Nombre del producto:" />
+      <Label fx:id="lbl_producto" layoutX="490.0" layoutY="181.0" text="Descripción del producto:" />
+      <Label fx:id="lbl_autorizacion" layoutX="490.0" layoutY="217.0" text="Nivel de autorización del usuario:" />
+      <TextField fx:id="txt_nombre" layoutX="687.0" layoutY="140.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre" />
+      <TextField fx:id="txt_descripcion" layoutX="687.0" layoutY="177.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el descripción" />
+      <TextField fx:id="txt_nivel" layoutX="687.0" layoutY="212.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nivel de autorización" />
+      <Button fx:id="btn_mostrar" layoutX="645.0" layoutY="251.0" mnemonicParsing="false" onAction="#verProducto" text="Mostrar" />
+      <TextArea fx:id="area_resultado" layoutX="490.0" layoutY="291.0" prefHeight="90.0" prefWidth="368.0" />
+      <Label fx:id="lbl_titleproxy" layoutX="490.0" layoutY="62.0" text="Proxy Pattern">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
@@ -51,8 +51,8 @@
       <Button fx:id="btn_pagosactivos" layoutX="276.0" layoutY="519.0" mnemonicParsing="false" onAction="#verFormasPagoActivas" text="Visualizar" />
       <TextField fx:id="txt_nombreproducto" layoutX="275.0" layoutY="321.0" promptText="Ingrese el producto" />
       <Separator layoutX="466.0" layoutY="108.0" orientation="VERTICAL" prefHeight="612.0" prefWidth="10.0" />
-      <Separator layoutX="571.0" layoutY="394.0" prefHeight="3.0" prefWidth="368.0" />
-      <Label fx:id="lbl_titleflyweight" layoutX="571.0" layoutY="409.0" text="Flyweight Pattern">
+      <Separator layoutX="490.0" layoutY="398.0" prefHeight="3.0" prefWidth="368.0" />
+      <Label fx:id="lbl_titleflyweight" layoutX="490.0" layoutY="413.0" text="Flyweight Pattern">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -62,15 +62,43 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lbl_productoproveedor" layoutX="571.0" layoutY="454.0" text="Nombre del producto:" />
-      <Label fx:id="lbl_proveedornombre" layoutX="571.0" layoutY="490.0" text="Nombre del proveedor:" />
-      <Label fx:id="lbl_telefonoproveedor" layoutX="571.0" layoutY="526.0" text="Teléfono del proveedor:" />
-      <TextField fx:id="txt_productflyweight" layoutX="768.0" layoutY="450.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre" />
-      <TextField fx:id="txt_proveedornombre" layoutX="768.0" layoutY="486.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre del proveedor" />
-      <TextField fx:id="txt_telefonoproveedor" layoutX="768.0" layoutY="522.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el teléfono" />
-      <Button fx:id="btn_agregarproducto" layoutX="566.0" layoutY="566.0" mnemonicParsing="false" onAction="#agregarProducto" text="Agregar Producto" />
-      <ListView fx:id="list_fly" layoutX="571.0" layoutY="605.0" prefHeight="84.0" prefWidth="368.0" />
-      <Label fx:id="lblEstadoProveedor" layoutX="727.0" layoutY="701.0" text="Estado del proveedor" />
-      <Label fx:id="lblTotalProveedores" layoutX="572.0" layoutY="701.0" text="Cantidad de proveedores" />
+      <Label fx:id="lbl_productoproveedor" layoutX="490.0" layoutY="458.0" text="Nombre del producto:" />
+      <Label fx:id="lbl_proveedornombre" layoutX="490.0" layoutY="494.0" text="Nombre del proveedor:" />
+      <Label fx:id="lbl_telefonoproveedor" layoutX="490.0" layoutY="530.0" text="Teléfono del proveedor:" />
+      <TextField fx:id="txt_productflyweight" layoutX="687.0" layoutY="454.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre" />
+      <TextField fx:id="txt_proveedornombre" layoutX="687.0" layoutY="490.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el nombre del proveedor" />
+      <TextField fx:id="txt_telefonoproveedor" layoutX="687.0" layoutY="526.0" prefHeight="26.0" prefWidth="176.0" promptText="Ingrese el teléfono" />
+      <Button fx:id="btn_agregarproducto" layoutX="485.0" layoutY="570.0" mnemonicParsing="false" onAction="#agregarProducto" text="Agregar Producto" />
+      <ListView fx:id="list_fly" layoutX="490.0" layoutY="609.0" prefHeight="84.0" prefWidth="368.0" />
+      <Label fx:id="lblEstadoProveedor" layoutX="646.0" layoutY="705.0" text="Estado del proveedor" />
+      <Label fx:id="lblTotalProveedores" layoutX="491.0" layoutY="705.0" text="Cantidad de proveedores" />
+      <Separator layoutX="879.0" layoutY="99.0" orientation="VERTICAL" prefHeight="623.0" prefWidth="10.0" />
+      <ListView fx:id="listViewProductos" layoutX="919.0" layoutY="534.0" prefHeight="150.0" prefWidth="318.0" />
+      <Label fx:id="lbl_productname" layoutX="915.0" layoutY="144.0" text="Nombre del producto:" />
+      <TextField fx:id="txt_productname" layoutX="1086.0" layoutY="140.0" promptText="Ingrese el nombre" />
+      <Label fx:id="lbl_proveedorname" layoutX="915.0" layoutY="181.0" text="Proveedor:" />
+      <Label fx:id="lbl_precioinicial" layoutX="915.0" layoutY="217.0" text="Precio inicial:" />
+      <TextField fx:id="txt_providername" layoutX="1085.0" layoutY="177.0" promptText="Ingrese el proveedor" />
+      <TextField fx:id="txt_precioinicial" layoutX="1085.0" layoutY="213.0" promptText="Ingrese el precio" />
+      <Label fx:id="lbl_selecproduct1" layoutX="915.0" layoutY="306.0" text="Seleccionar producto:" />
+      <ComboBox fx:id="comboBoxProducto" layoutX="1085.0" layoutY="302.0" prefWidth="150.0" promptText="Lista de productos" />
+      <Label fx:id="lbl_perc" layoutX="915.0" layoutY="338.0" text="Porcentaje de variación" />
+      <TextField fx:id="txt_definirporcentaje" layoutX="1086.0" layoutY="334.0" promptText="Indique 10 o -10" />
+      <Button fx:id="btn_AplicarAjuste" layoutX="1003.0" layoutY="369.0" mnemonicParsing="false" onAction="#aplicarAjustePrecio" prefHeight="26.0" prefWidth="150.0" text="Aplicar Aumento/Bajada" />
+      <Label fx:id="lbl_selecproduct2" layoutX="921.0" layoutY="446.0" text="Seleccionar Producto" />
+      <ComboBox fx:id="comboBoxRestaurarProducto" layoutX="1086.0" layoutY="443.0" prefWidth="150.0" />
+      <Label fx:id="lbl_year" layoutX="920.0" layoutY="481.0" text="Año" />
+      <TextField fx:id="txtAnioRestaurar" layoutX="1086.0" layoutY="474.0" />
+      <Button fx:id="btnRestaurarPrecio" layoutX="1027.0" layoutY="517.0" mnemonicParsing="false" onAction="#restaurarPrecio" text="Restaurar Precio" />
+      <Label fx:id="lbl_selectprod" layoutX="917.0" layoutY="561.0" text="Seleccionar Producto:" />
+      <ComboBox fx:id="comboBoxMostrarProducto" layoutX="1086.0" layoutY="557.0" prefWidth="150.0" />
+      <Button fx:id="btnMostrarPrecio" layoutX="1052.0" layoutY="616.0" mnemonicParsing="false" onAction="#mostrarPrecio" text="Button" />
+      <Button fx:id="btn_addprod" layoutX="1023.0" layoutY="251.0" mnemonicParsing="false" onAction="#addProduct" text="Agregar Producto" />
+      <Label layoutX="915.0" layoutY="62.0" text="Memento &amp; Observer">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Separator layoutX="915.0" layoutY="289.0" prefHeight="3.0" prefWidth="318.0" />
    </children>
 </AnchorPane>

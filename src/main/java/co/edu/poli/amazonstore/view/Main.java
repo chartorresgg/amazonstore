@@ -1,14 +1,13 @@
 package co.edu.poli.amazonstore.view;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.IOException;
-
-import co.edu.poli.amazonstore.view.Main;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * JavaFX App

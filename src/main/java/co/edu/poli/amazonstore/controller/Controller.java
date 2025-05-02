@@ -1,14 +1,18 @@
 package co.edu.poli.amazonstore.controller;
 
+import co.edu.poli.amazonstore.model.Caretaker;
 import co.edu.poli.amazonstore.model.ClienteFacade;
 import co.edu.poli.amazonstore.model.FormasPago;
 import co.edu.poli.amazonstore.model.HistorialPedidos;
 import co.edu.poli.amazonstore.model.IProducto;
 import co.edu.poli.amazonstore.model.InformacionPersonal;
+import co.edu.poli.amazonstore.model.NotificadorPrecio;
 import co.edu.poli.amazonstore.model.Producto;
 import co.edu.poli.amazonstore.model.ProductoProxy;
 import co.edu.poli.amazonstore.model.Proveedor;
 import co.edu.poli.amazonstore.model.ProveedorFactory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -26,7 +30,9 @@ public class Controller {
 
 			txt_nombre, txt_descripcion, txt_nivel,
 
-			txt_productflyweight, txt_proveedornombre, txt_telefonoproveedor;
+			txt_productflyweight, txt_proveedornombre, txt_telefonoproveedor,
+
+			txt_productname, txt_providername, txt_precioinicial, txt_definirporcentaje, txtAnioRestaurar;
 
 	@FXML
 	private Label lbl_infocliente, lbl_nombrecliente, lbl_correocliente, lbl_direccioncliente,
@@ -36,7 +42,7 @@ public class Controller {
 			lbl_nombre, lbl_producto, lbl_autorizacion,
 
 			lbl_titleflyweight, lbl_productoproveedor, lbl_proveedornombre, lbl_telefonoproveedor, lblEstadoProveedor,
-			lblTotalProveedores;
+			lblTotalProveedores, lbl_selectprod, lbl_year, lbl_selecproduct2, lbl_selecproduct1, lbl_perc;
 
 	@FXML
 	private TextArea txtResultado, area_resultado;
@@ -46,15 +52,31 @@ public class Controller {
 
 			btn_hacerpedido, btn_mostrarpedido, btn_pagoactivo, btn_pagobloqueado, btn_pagosactivos, btn_mostrar,
 
-			btn_agregarproducto;
+			btn_agregarproducto, btn_addprod;
 
 	@FXML
 	private ComboBox<String> combo_metodospago;
 
 	@FXML
+    private ComboBox<Producto> comboBoxProducto;
+
+	@FXML
+    private ComboBox<Producto> comboBoxRestaurarProducto;
+
+	@FXML
+    private ComboBox<Producto> comboBoxMostrarProducto;
+
+	@FXML
 	private ListView<String> list_fly;
 
+	@FXML
+    private ListView<Producto> listViewProductos;
+
 	private ClienteFacade cliente;
+
+	private ObservableList<Producto> productos = FXCollections.observableArrayList();
+    private NotificadorPrecio notificador = new NotificadorPrecio();
+    private Caretaker caretaker = new Caretaker();
 
 	@FXML
 	public void initialize() {
@@ -79,6 +101,9 @@ public class Controller {
 			"Nequi",
 			"Puntos Colombia"
 		);
+
+
+		// Memento y Observer
 
 	}
 
@@ -214,7 +239,7 @@ public class Controller {
 
 		// Obtener (o reutilizar) el proveedor
 		Proveedor proveedor = proveedorFactory.obtenerProveedor(nombreProveedor, contactoProveedor);
-		Producto producto = new Producto(nombreProducto, proveedor);
+		Producto producto = new Producto(nombreProducto, proveedor, 0.0); // Precio inicial puede ser 0.0 o el que desees
 
 		// Mostrar en la interfaz
 		list_fly.getItems().add("Producto: " + nombreProducto + " | Proveedor: " + proveedor.getNombre()
@@ -235,5 +260,61 @@ public class Controller {
 		txt_proveedornombre.clear();
 		txt_telefonoproveedor.clear();
 	}
+
+	// MEMENTO AND OBSERVER PATTERN IMPLEMENTATION
+
+	// Método para agregar un producto
+    @FXML
+    public void addProduct() {
+        String nombre = txt_productname.getText();
+        String proveedor = txt_providername.getText();
+        double precioInicial = Double.parseDouble(txt_precioinicial.getText());
+
+        // Crear nuevo producto y agregarlo a la lista
+        Producto producto = new Producto(nombre, new Proveedor(proveedor, "Contacto del proveedor"), precioInicial);
+        productos.add(producto);
+
+        // Actualizar la lista de productos en la interfaz
+        listViewProductos.setItems(productos);
+        comboBoxProducto.setItems(productos);
+        comboBoxRestaurarProducto.setItems(productos);
+        comboBoxMostrarProducto.setItems(productos);
+
+        // Limpiar campos
+        txt_productname.clear();
+        txt_providername.clear();
+        txt_precioinicial.clear();
+    }
+
+    // Método para aplicar aumento o baja de precio
+    @FXML
+    public void aplicarAjustePrecio() {
+        Producto productoSeleccionado = comboBoxProducto.getValue();
+        double porcentaje = Double.parseDouble(txt_definirporcentaje.getText());
+
+        // Notificar al producto para que ajuste el precio
+        notificador.notificarAumento(porcentaje);
+        productoSeleccionado.actualizarPrecio(porcentaje);
+
+        // Limpiar campo de porcentaje
+        txt_definirporcentaje.clear();
+    }
+
+    // Método para restaurar el precio de un producto a un año específico
+    @FXML
+    public void restaurarPrecio() {
+        Producto productoSeleccionado = comboBoxRestaurarProducto.getValue();
+        int anio = Integer.parseInt(txtAnioRestaurar.getText());
+
+        // Restaurar el precio del producto
+        productoSeleccionado.restaurarEstado(anio);
+    }
+
+    // Método para mostrar el precio actual del producto
+    @FXML
+    public void mostrarPrecio() {
+        Producto productoSeleccionado = comboBoxMostrarProducto.getValue();
+        System.out.println("Precio actual de " + productoSeleccionado + ": " + productoSeleccionado.getPrecioActual());
+    }
 
 }
