@@ -340,13 +340,23 @@ public void aplicarAjustePrecio() {
     @FXML
 public void restaurarPrecio() {
     Producto productoSeleccionado = comboBoxRestaurarProducto.getValue();
-    int anio = Integer.parseInt(txtAnioRestaurar.getText()); // Año ingresado por el usuario
+    int anio = Integer.parseInt(txtAnioRestaurar.getText());
 
-    // Restaurar el precio del producto
     if (productoSeleccionado != null) {
-        productoSeleccionado.restaurarEstado(anio);
+        // Buscar memento en el Caretaker (historial centralizado)
+        Memento memento = caretaker.obtenerMemento(productoSeleccionado.getNombreProducto(), anio);
+
+        if (memento != null) {
+            productoSeleccionado.setPrecioActual(memento.getPrecio()); // Restaurar directamente
+            txtResultado.setText("✅ Precio restaurado a $" + memento.getPrecio() + " del año " + anio);
+        } else {
+            txtResultado.setText("⚠️ No hay precio guardado para el año " + anio);
+        }
+    } else {
+        txtResultado.setText("⚠️ Debes seleccionar un producto para restaurar.");
     }
 }
+
 
     // Método para mostrar el precio actual del producto
     @FXML

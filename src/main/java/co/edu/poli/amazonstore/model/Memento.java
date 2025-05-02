@@ -1,6 +1,7 @@
 package co.edu.poli.amazonstore.model;
 
 public class Memento {
+    
     private final double precio;
     private final int año;
 
