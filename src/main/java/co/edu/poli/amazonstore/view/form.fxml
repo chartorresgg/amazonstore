@@ -74,12 +74,12 @@
       <Label fx:id="lblTotalProveedores" layoutX="491.0" layoutY="705.0" text="Cantidad de proveedores" />
       <Separator layoutX="879.0" layoutY="99.0" orientation="VERTICAL" prefHeight="623.0" prefWidth="10.0" />
       <ListView fx:id="listViewProductos" layoutX="919.0" layoutY="635.0" prefHeight="90.0" prefWidth="318.0" />
-      <Label fx:id="lbl_productname" layoutX="915.0" layoutY="144.0" text="Nombre del producto:" />
-      <TextField fx:id="txt_productname" layoutX="1086.0" layoutY="140.0" promptText="Ingrese el nombre" />
-      <Label fx:id="lbl_proveedorname" layoutX="915.0" layoutY="181.0" text="Proveedor:" />
-      <Label fx:id="lbl_precioinicial" layoutX="915.0" layoutY="217.0" text="Precio inicial:" />
-      <TextField fx:id="txt_providername" layoutX="1085.0" layoutY="177.0" promptText="Ingrese el proveedor" />
-      <TextField fx:id="txt_precioinicial" layoutX="1085.0" layoutY="213.0" promptText="Ingrese el precio" />
+      <Label fx:id="lbl_productname" layoutX="917.0" layoutY="108.0" text="Nombre del producto:" />
+      <TextField fx:id="txt_productname" layoutX="1088.0" layoutY="104.0" promptText="Ingrese el nombre" />
+      <Label fx:id="lbl_proveedorname" layoutX="917.0" layoutY="145.0" text="Proveedor:" />
+      <Label fx:id="lbl_precioinicial" layoutX="917.0" layoutY="181.0" text="Precio inicial:" />
+      <TextField fx:id="txt_providername" layoutX="1087.0" layoutY="141.0" promptText="Ingrese el proveedor" />
+      <TextField fx:id="txt_precioinicial" layoutX="1087.0" layoutY="177.0" promptText="Ingrese el precio" />
       <Label fx:id="lbl_selecproduct1" layoutX="915.0" layoutY="306.0" text="Seleccionar producto:" />
       <ComboBox fx:id="comboBoxProducto" layoutX="1085.0" layoutY="302.0" prefWidth="150.0" promptText="Lista de productos" />
       <Label fx:id="lbl_perc" layoutX="915.0" layoutY="338.0" text="Porcentaje de variación" />
@@ -101,5 +101,7 @@
       </Label>
       <Separator layoutX="915.0" layoutY="289.0" prefHeight="3.0" prefWidth="318.0" />
       <Separator layoutX="915.0" layoutY="409.0" prefHeight="3.0" prefWidth="318.0" />
+      <Label fx:id="lbl_yearpro" layoutX="917.0" layoutY="217.0" text="Año" />
+      <TextField fx:id="txtAnioInicial" layoutX="1088.0" layoutY="213.0" promptText="Ingrese el año" />
    </children>
 </AnchorPane>

@@ -33,14 +33,14 @@ public class Controller {
 
 			txt_productflyweight, txt_proveedornombre, txt_telefonoproveedor,
 
-			txt_productname, txt_providername, txt_precioinicial, txt_definirporcentaje, txtAnioRestaurar;
+			txt_productname, txt_providername, txt_precioinicial, txt_definirporcentaje, txtAnioRestaurar, txtAnioInicial;
 
 	@FXML
 	private Label lbl_infocliente, lbl_nombrecliente, lbl_correocliente, lbl_direccioncliente,
 
 			lbl_tagpedidos, lbl_productonombre, lbl_precioproducto, lbl_tagpagos, lbl_metodopago,
 
-			lbl_nombre, lbl_producto, lbl_autorizacion,
+			lbl_nombre, lbl_producto, lbl_autorizacion, lbl_yearpro,
 
 			lbl_titleflyweight, lbl_productoproveedor, lbl_proveedornombre, lbl_telefonoproveedor, lblEstadoProveedor,
 			lblTotalProveedores, lbl_selectprod, lbl_year, lbl_selecproduct2, lbl_selecproduct1, lbl_perc;
@@ -270,46 +270,52 @@ public void addProduct() {
     String nombre = txt_productname.getText();
     String proveedor = txt_providername.getText();
     String precioTexto = txt_precioinicial.getText();
+    String anioTexto = txtAnioInicial.getText();
 
-    if (nombre.isEmpty() || proveedor.isEmpty() || precioTexto.isEmpty()) {
-        txtResultado.setText("⚠️ Debes completar todos los campos antes de agregar un producto.");
+    if (nombre.isEmpty() || proveedor.isEmpty() || precioTexto.isEmpty() || anioTexto.isEmpty()) {
+        txtResultado.setText("⚠️ Debes completar todos los campos (nombre, proveedor, precio, año).");
         return;
     }
 
     double precioInicial;
+    int anio;
+
     try {
         precioInicial = Double.parseDouble(precioTexto);
+        anio = Integer.parseInt(anioTexto);
     } catch (NumberFormatException e) {
-        txtResultado.setText("⚠️ El precio debe ser un número válido.");
+        txtResultado.setText("⚠️ El precio y el año deben ser números válidos.");
         return;
     }
 
     Producto producto = new Producto(nombre, new Proveedor(proveedor, "Contacto del proveedor"), precioInicial);
     productos.add(producto);
-    notificador.agregarProducto(producto);
+    notificador.agregarSuscriptor(producto);
+
+    // Guardar el memento con el año proporcionado
+    Memento memento = new Memento(precioInicial, anio);
+    caretaker.guardarMemento(producto.getNombreProducto(), memento);
 
     // Actualizar interfaces
     listViewProductos.setItems(productos);
     comboBoxProducto.setItems(productos);
     comboBoxRestaurarProducto.setItems(productos);
     comboBoxMostrarProducto.setItems(productos);
-
-    // Seleccionar el nuevo producto por defecto
     comboBoxMostrarProducto.getSelectionModel().select(producto);
 
-    // Limpiar campos
     txt_productname.clear();
     txt_providername.clear();
     txt_precioinicial.clear();
+    txtAnioInicial.clear();
 
-    txtResultado.setText("✅ Producto agregado: " + producto.getNombreProducto() + " con precio $" + producto.getPrecioActual());
-    System.out.println("Producto agregado: " + producto); // Debug
+    txtResultado.setText("✅ Producto agregado en el año " + anio + ": " + producto.getNombreProducto() + " con precio $" + producto.getPrecioActual());
 }
 
 
     // Método para aplicar aumento o baja de precio
     @FXML
 public void aplicarAjustePrecio() {
+	
     double porcentaje = Double.parseDouble(txt_definirporcentaje.getText());
     int añoActual = java.time.Year.now().getValue();  // Año actual
 
@@ -333,6 +339,7 @@ public void aplicarAjustePrecio() {
     }
 
     txt_definirporcentaje.clear();
+	listViewProductos.refresh();
 }
 
 
@@ -345,14 +352,18 @@ public void restaurarPrecio() {
     if (productoSeleccionado != null) {
         // Buscar memento en el Caretaker (historial centralizado)
         Memento memento = caretaker.obtenerMemento(productoSeleccionado.getNombreProducto(), anio);
+		
+
 
         if (memento != null) {
             productoSeleccionado.setPrecioActual(memento.getPrecio()); // Restaurar directamente
-            txtResultado.setText("✅ Precio restaurado a $" + memento.getPrecio() + " del año " + anio);
+            listViewProductos.refresh();
+			txtResultado.setText("✅ Precio restaurado a $" + memento.getPrecio() + " del año " + anio);
         } else {
             txtResultado.setText("⚠️ No hay precio guardado para el año " + anio);
         }
     } else {
+		
         txtResultado.setText("⚠️ Debes seleccionar un producto para restaurar.");
     }
 }
@@ -365,6 +376,7 @@ public void mostrarPrecio() {
 
     Producto productoSeleccionado = comboBoxMostrarProducto.getValue();
     System.out.println("Producto seleccionado: " + productoSeleccionado);
+	
 
     if (productoSeleccionado == null) {
         txtResultado.setText("⚠️ Debes seleccionar un producto para ver su precio.");
@@ -373,6 +385,7 @@ public void mostrarPrecio() {
 
     txtResultado.setText("💲 Precio actual de " + productoSeleccionado.getNombreProducto() + ": $" + productoSeleccionado.getPrecioActual());
 }
+
 
 	
 }

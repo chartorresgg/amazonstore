@@ -6,12 +6,12 @@ import java.util.List;
 public class NotificadorPrecio {
     private List<Subscriber> suscriptores = new ArrayList<>();
 
-    public void agregarProducto(Subscriber producto) {
-        suscriptores.add(producto);
+    public void agregarSuscriptor(Subscriber suscriptor) {
+        suscriptores.add(suscriptor);
     }
 
-    public void eliminarProducto(Subscriber producto) {
-        suscriptores.remove(producto);
+    public void eliminarSuscriptor(Subscriber suscriptor) {
+        suscriptores.remove(suscriptor);
     }
 
     public void notificarAumento(double porcentaje) {
