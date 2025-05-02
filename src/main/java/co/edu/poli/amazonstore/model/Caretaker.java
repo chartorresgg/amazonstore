@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class Caretaker {
     
+    // Mapa para almacenar los mementos de cada producto por año
+    // La clave es el nombre del producto y el valor es otro mapa que tiene como clave el año y como valor el memento
     private Map<String, Map<Integer, Memento>> historial = new HashMap<>();
 
     public void guardarMemento(String nombreProducto, Memento memento) {
