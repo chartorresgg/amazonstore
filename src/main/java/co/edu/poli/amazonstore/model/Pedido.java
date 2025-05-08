@@ -13,6 +13,7 @@ public class Pedido {
     private List<Producto> productos = new ArrayList<>();
     private Cliente cliente;
     private EstrategiaDescuento estrategia;
+    private double montoMinimo;
 
     /**
      * Constructor de la clase Pedido.
@@ -22,6 +23,8 @@ public class Pedido {
     public Pedido(Cliente cliente) {
         this.cliente = cliente;
     }
+    
+    
 
     ///--------Métodos----------//
 
@@ -70,5 +73,15 @@ public class Pedido {
     public EstrategiaDescuento getEstrategia() {
         return estrategia;
     }
+
+    public double getMontoMinimo() {
+        return montoMinimo;
+    }
+
+    public void setMontoMinimo(double montoMinimo) {
+        this.montoMinimo = montoMinimo;
+    }
+
+    
 
 }

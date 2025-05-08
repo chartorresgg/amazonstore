@@ -4,10 +4,17 @@ public class Cliente {
 
     private String nombreCliente;
     private boolean esFrecuente;
+    private boolean activo;
 
     public Cliente(String nombreCliente, boolean esFrecuente) {
         this.nombreCliente = nombreCliente;
         this.esFrecuente = esFrecuente;
+    }
+
+    public Cliente(String nombreCliente, boolean esFrecuente, boolean activo) {
+        this.nombreCliente = nombreCliente;
+        this.esFrecuente = esFrecuente;
+        this.activo = activo;
     }
 
     public String getNombreCliente() {
@@ -28,6 +35,14 @@ public class Cliente {
 
     public void setEsFrecuente(boolean esFrecuente) {
         this.esFrecuente = esFrecuente;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     ///--------Métodos----------//
