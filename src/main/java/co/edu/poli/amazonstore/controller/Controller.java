@@ -6,14 +6,21 @@ import java.util.Map;
 import co.edu.poli.amazonstore.model.Cliente;
 import co.edu.poli.amazonstore.model.DescuentoClienteFrecuente;
 import co.edu.poli.amazonstore.model.DescuentoPromocion;
+import co.edu.poli.amazonstore.model.ManejadorPedido;
 import co.edu.poli.amazonstore.model.Pedido;
 import co.edu.poli.amazonstore.model.Producto;
 import co.edu.poli.amazonstore.model.SinDescuento;
+import co.edu.poli.amazonstore.model.ValidadorClienteActivo;
+import co.edu.poli.amazonstore.model.ValidadorMontoMinimo;
+import co.edu.poli.amazonstore.model.ValidadorStock;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+
 
 public class Controller {
 
@@ -24,6 +31,15 @@ public class Controller {
     @FXML private ComboBox<String> comboEstrategia;
     @FXML private Button btnAgregar, btnQuitar, btnCalcular;
     @FXML private Label labelBruto, labelDescuento, labelTotal;
+
+
+    @FXML private CheckBox chkValidarProductos;
+    @FXML private CheckBox chkValidarMontoMinimo;
+    @FXML private CheckBox chkValidarClienteFrecuente;
+    @FXML private TextField txtMontoMinimo;
+    @FXML private Button btnValidar;
+    @FXML private Label labelEstadoValidacion;
+    @FXML private ListView<String> listViewLogValidacion;
 
 	private Map<String, Producto> productosDisponibles = new HashMap<>();
     private Map<String, Cliente> clientes = new HashMap<>();
@@ -51,7 +67,13 @@ public class Controller {
         comboCliente.setOnAction(e -> seleccionarCliente());
         btnAgregar.setOnAction(e -> agregarProducto());
         btnQuitar.setOnAction(e -> quitarProducto());
-        btnCalcular.setOnAction(e -> calcularTotal());
+        btnCalcular.setOnAction(e -> {
+            if (pedidoActual != null) {
+                validarPedido(pedidoActual);  // Validación previa
+                calcularTotal();  // Solo si la validación fue exitosa
+            }
+        });
+        btnValidar.setOnAction(e -> validarPedido(pedidoActual));
 
 	}
 
@@ -105,5 +127,31 @@ public class Controller {
         labelDescuento.setText(String.format("$ %.2f", descuento));
         labelTotal.setText(String.format("$ %.2f", total));
     }
+
+
+     public void validarPedido(Pedido pedido) {
+    try {
+        // Creamos la cadena de validadores
+        ManejadorPedido validadorClienteActivo = new ValidadorClienteActivo();
+        ManejadorPedido validadorMontoMinimo = new ValidadorMontoMinimo();
+        ManejadorPedido validadorStock = new ValidadorStock();
+
+        // Encadenamos los validadores
+        validadorClienteActivo.setSiguiente(validadorMontoMinimo);
+        validadorMontoMinimo.setSiguiente(validadorStock);
+
+        // Procesamos el pedido pasando por la cadena de validadores
+        validadorClienteActivo.procesar(pedido);
+
+        // Si todo es válido, actualizar la UI
+        labelEstadoValidacion.setText("Pedido validado exitosamente.");
+        System.out.println("Pedido validado exitosamente.");
+        
+    } catch (RuntimeException e) {
+        // Manejo de errores cuando alguna validación falla
+        labelEstadoValidacion.setText("Error de validación: " + e.getMessage());
+        System.err.println("Error de validación: " + e.getMessage());
+    }
+}
 
 }
