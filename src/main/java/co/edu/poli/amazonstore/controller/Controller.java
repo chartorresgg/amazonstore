@@ -1,8 +1,7 @@
 package co.edu.poli.amazonstore.controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import co.edu.poli.amazonstore.model.Cliente;
 import co.edu.poli.amazonstore.model.DescuentoClienteFrecuente;
@@ -10,6 +9,11 @@ import co.edu.poli.amazonstore.model.DescuentoPromocion;
 import co.edu.poli.amazonstore.model.Pedido;
 import co.edu.poli.amazonstore.model.Producto;
 import co.edu.poli.amazonstore.model.SinDescuento;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 
 public class Controller {
 
@@ -30,8 +34,8 @@ public class Controller {
 
 		Cliente ana = new Cliente("Ana", true);
         Cliente juan = new Cliente("Juan", false);
-        clientes.put(ana.getNombre(), ana);
-        clientes.put(juan.getNombre(), juan);
+        clientes.put(ana.getNombreCliente(), ana);
+        clientes.put(juan.getNombreCliente(), juan);
         comboCliente.getItems().addAll(clientes.keySet());
 
         // Productos
@@ -72,7 +76,7 @@ public class Controller {
         String seleccionado = listViewPedido.getSelectionModel().getSelectedItem();
         if (seleccionado != null && pedidoActual != null) {
             listViewPedido.getItems().remove(seleccionado);
-            pedidoActual.getProductos().removeIf(p -> p.getNombre().equals(seleccionado));
+            pedidoActual.getProductos().removeIf(p -> p.getNombreProducto().equals(seleccionado));
         }
     }
 
@@ -93,7 +97,7 @@ public class Controller {
                 break;
         }
 
-        double bruto = pedidoActual.getTotalBruto();
+        double bruto = pedidoActual.calcularTotalBruto();
         double descuento = pedidoActual.getEstrategia().calcularDescuento(pedidoActual);
         double total = pedidoActual.calcularTotalConDescuento();
 

@@ -2,33 +2,38 @@ package co.edu.poli.amazonstore.model;
 
 public class Cliente {
 
-    private String nombre;
+    private String nombreCliente;
     private boolean esFrecuente;
 
-    public Cliente(String nombre, boolean esFrecuente) {
-        this.nombre = nombre;
+    public Cliente(String nombreCliente, boolean esFrecuente) {
+        this.nombreCliente = nombreCliente;
         this.esFrecuente = esFrecuente;
     }
 
-    public boolean esFrecuente() {
-        return esFrecuente;
+    public String getNombreCliente() {
+        return nombreCliente;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 
     public boolean isEsFrecuente() {
         return esFrecuente;
     }
 
+    public boolean esFrecuente() {
+        return esFrecuente;
+    }    
+
     public void setEsFrecuente(boolean esFrecuente) {
         this.esFrecuente = esFrecuente;
     }
+
+    ///--------Métodos----------//
+    
+
+    
 
 
     

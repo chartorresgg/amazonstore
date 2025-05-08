@@ -3,33 +3,62 @@ package co.edu.poli.amazonstore.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que representa un pedido en la tienda.
+ * Contiene una lista de productos, un cliente y una estrategia de descuento.
+ * Esta clase es parte del patrón de diseño Strategy, donde la estrategia de descuento se puede cambiar en tiempo de ejecución.
+ */
 public class Pedido {
 
     private List<Producto> productos = new ArrayList<>();
     private Cliente cliente;
     private EstrategiaDescuento estrategia;
 
+    /**
+     * Constructor de la clase Pedido.
+     * @param cliente El cliente que realiza el pedido.
+     */
+
     public Pedido(Cliente cliente) {
         this.cliente = cliente;
     }
 
+    ///--------Métodos----------//
+
+    /**
+     * Agrega un producto a la lista de productos del pedido.
+     * @param producto El producto a agregar.
+     */
     public void agregarProducto(Producto producto) {
         productos.add(producto);
     }
 
+    /**
+     * Calcula el total bruto del pedido, es decir, la suma de los precios de todos los productos.
+     * @return El total bruto del pedido.
+     */
+    public double calcularTotalBruto() {
+        return productos.stream().mapToDouble(Producto::getPrecio).sum();
+    }
+
+    /**
+     * Calcula el total del pedido aplicando la estrategia de descuento establecida.
+     * @return El total del pedido después de aplicar el descuento.
+     */
+    public double calcularTotalConDescuento() {
+        double descuento = estrategia.calcularDescuento(this);
+        return calcularTotalBruto() - descuento;
+    }
+
+    /**
+     * Establece la estrategia de descuento a utilizar para calcular el total del pedido.
+     * @param estrategia La estrategia de descuento a utilizar.
+     */
     public void establecerEstrategia(EstrategiaDescuento estrategia) {
         this.estrategia = estrategia;
     }
 
-    public double getTotalBruto() {
-        return productos.stream().mapToDouble(Producto::getPrecio).sum();
-    }
-
-    public double calcularTotalConDescuento() {
-        double descuento = estrategia.calcularDescuento(this);
-        return getTotalBruto() - descuento;
-    }
-
+    //--------Getters y Setters----------//
     public Cliente getCliente() {
         return cliente;
     }
@@ -41,6 +70,5 @@ public class Pedido {
     public EstrategiaDescuento getEstrategia() {
         return estrategia;
     }
-
 
 }

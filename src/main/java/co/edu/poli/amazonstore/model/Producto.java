@@ -2,19 +2,21 @@ package co.edu.poli.amazonstore.model;
 
 public class Producto {
     
-    private String nombre;
+    private String nombreProducto;
     private double precio;
 
-    public Producto(String nombre, double precio) {
-        this.nombre = nombre;
+    public Producto(String nombreProducto, double precio) {
+        this.nombreProducto = nombreProducto;
         this.precio = precio;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
     }
 
     public double getPrecio() {
         return precio;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    
 }
