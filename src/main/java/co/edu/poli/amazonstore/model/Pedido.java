@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase que representa un pedido en la tienda.
- * Contiene una lista de productos, un cliente y una estrategia de descuento.
+ * Clase que representa un pedido con productos y cliente, aplicando lógica de descuento y validación.
+ * Contiene una lista de productos, un cliente, una estrategia de descuento y un monto mínimo.
+ * Esta clase permite agregar productos, calcular el total bruto y aplicar descuentos según la estrategia definida.
  * Esta clase es parte del patrón de diseño Strategy, donde la estrategia de descuento se puede cambiar en tiempo de ejecución.
  */
 public class Pedido {
@@ -89,7 +90,5 @@ public class Pedido {
     public void setMontoMinimo(double montoMinimo) {
         this.montoMinimo = montoMinimo;
     }
-
-    
 
 }
