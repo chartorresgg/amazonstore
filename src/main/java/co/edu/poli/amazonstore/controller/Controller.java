@@ -24,6 +24,8 @@ import javafx.scene.control.TextField;
 
 public class Controller {
 
+    // Componentes de Strategy
+
 	@FXML private ComboBox<String> comboCliente;
     @FXML private Label labelFrecuente;
     @FXML private ListView<String> listViewProductos;
@@ -32,14 +34,16 @@ public class Controller {
     @FXML private Button btnAgregar, btnQuitar, btnCalcular;
     @FXML private Label labelBruto, labelDescuento, labelTotal;
 
+    // Componentes de Chain of Responsibility
 
     @FXML private CheckBox chkValidarProductos;
     @FXML private CheckBox chkValidarMontoMinimo;
-    @FXML private CheckBox chkValidarClienteFrecuente;
+    @FXML private CheckBox chkValidarClienteActivo;
     @FXML private TextField txtMontoMinimo;
     @FXML private Button btnValidar;
     @FXML private Label labelEstadoValidacion;
     @FXML private ListView<String> listViewLogValidacion;
+
 
 	private Map<String, Producto> productosDisponibles = new HashMap<>();
     private Map<String, Cliente> clientes = new HashMap<>();
@@ -48,16 +52,16 @@ public class Controller {
 	@FXML
 	public void initialize() {
 
-		Cliente ana = new Cliente("Ana", true);
-        Cliente juan = new Cliente("Juan", false);
+		Cliente ana = new Cliente("Ana", true, true);
+        Cliente juan = new Cliente("Juan", false, false);
         clientes.put(ana.getNombreCliente(), ana);
         clientes.put(juan.getNombreCliente(), juan);
         comboCliente.getItems().addAll(clientes.keySet());
 
         // Productos
-        productosDisponibles.put("Libro", new Producto("Libro", 100.0));
-        productosDisponibles.put("Agenda", new Producto("Agenda", 50.0));
-        productosDisponibles.put("Cuaderno", new Producto("Cuaderno", 30.0));
+        productosDisponibles.put("Libro", new Producto("Libro", 100.0, 10));
+        productosDisponibles.put("Agenda", new Producto("Agenda", 50.0, 0));
+        productosDisponibles.put("Cuaderno", new Producto("Cuaderno", 30.0, 20));
         listViewProductos.getItems().addAll(productosDisponibles.keySet());
 
         // Estrategias
@@ -76,6 +80,8 @@ public class Controller {
         btnValidar.setOnAction(e -> validarPedido(pedidoActual));
 
 	}
+
+    // Métodos de Strategy
 
 	private void seleccionarCliente() {
         String nombre = comboCliente.getValue();
@@ -128,30 +134,62 @@ public class Controller {
         labelTotal.setText(String.format("$ %.2f", total));
     }
 
+    // Métodos de Chain of Responsibility	
 
      public void validarPedido(Pedido pedido) {
+    listViewLogValidacion.getItems().clear();
+
     try {
-        // Creamos la cadena de validadores
-        ManejadorPedido validadorClienteActivo = new ValidadorClienteActivo();
-        ManejadorPedido validadorMontoMinimo = new ValidadorMontoMinimo();
-        ManejadorPedido validadorStock = new ValidadorStock();
+        ManejadorPedido primero = null;
+        ManejadorPedido actual = null;
 
-        // Encadenamos los validadores
-        validadorClienteActivo.setSiguiente(validadorMontoMinimo);
-        validadorMontoMinimo.setSiguiente(validadorStock);
+        if (chkValidarClienteActivo.isSelected()) {
+            actual = new ValidadorClienteActivo();
+            primero = actual;
+            listViewLogValidacion.getItems().add("✔ Validador Cliente Activo agregado.");
+        }
 
-        // Procesamos el pedido pasando por la cadena de validadores
-        validadorClienteActivo.procesar(pedido);
+        if (chkValidarMontoMinimo.isSelected()) {
+            if (txtMontoMinimo.getText().isEmpty()) {
+                throw new RuntimeException("Debe ingresar el monto mínimo.");
+            }
+            double montoMin = Double.parseDouble(txtMontoMinimo.getText());
+            pedido.setMontoMinimo(montoMin);
 
-        // Si todo es válido, actualizar la UI
-        labelEstadoValidacion.setText("Pedido validado exitosamente.");
-        System.out.println("Pedido validado exitosamente.");
-        
+            ManejadorPedido nuevo = new ValidadorMontoMinimo();
+            if (primero == null) {
+                primero = nuevo;
+            } else {
+                actual.setSiguiente(nuevo);
+            }
+            actual = nuevo;
+            listViewLogValidacion.getItems().add("✔ Validador Monto Mínimo agregado.");
+        }
+
+        if (chkValidarProductos.isSelected()) {
+            ManejadorPedido nuevo = new ValidadorStock();
+            if (primero == null) {
+                primero = nuevo;
+            } else {
+                actual.setSiguiente(nuevo);
+            }
+            actual = nuevo;
+            listViewLogValidacion.getItems().add("✔ Validador Stock agregado.");
+        }
+
+        if (primero == null) {
+            throw new RuntimeException("Seleccione al menos un validador.");
+        }
+
+        primero.procesar(pedido);
+
+        labelEstadoValidacion.setText("✅ Pedido validado exitosamente.");
+        listViewLogValidacion.getItems().add("✅ Validación completada con éxito.");
     } catch (RuntimeException e) {
-        // Manejo de errores cuando alguna validación falla
-        labelEstadoValidacion.setText("Error de validación: " + e.getMessage());
-        System.err.println("Error de validación: " + e.getMessage());
+        labelEstadoValidacion.setText("❌ " + e.getMessage());
+        listViewLogValidacion.getItems().add("❌ Error: " + e.getMessage());
     }
 }
+
 
 }
