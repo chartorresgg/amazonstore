@@ -24,7 +24,7 @@ public class Main extends Application {
 				.load(getClass().getResource("/co/edu/poli/amazonstore/view/form.fxml"));
 		scene = new Scene(root);
 		stage.setScene(scene);
-		stage.setTitle("Formulario de Cliente");
+		stage.setTitle("Amazon Store: Tienda de productos");
 		stage.show();
 	}
 

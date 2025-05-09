@@ -24,7 +24,15 @@ public class Pedido {
         this.cliente = cliente;
     }
     
-    
+    /**
+     * Constructor de la clase Pedido.
+     * @param cliente El cliente que realiza el pedido.
+     * @param montoMinimo El monto mínimo para aplicar un descuento.
+     */
+    public Pedido(Cliente cliente, double montoMinimo) {
+        this.cliente = cliente;
+        this.montoMinimo = montoMinimo;
+    }
 
     ///--------Métodos----------//
 

@@ -1,21 +1,30 @@
 package co.edu.poli.amazonstore.model;
 
+/**
+ * Clase que representa un cliente en la tienda.
+ * Esta clase contiene información sobre el nombre del cliente, si es un cliente frecuente
+ *  y si está activo. Esta clase es parte del patrón de diseño Strategy, donde la estrategia de descuento 
+ * se puede cambiar en tiempo de ejecución.
+ */
 public class Cliente {
 
     private String nombreCliente;
     private boolean esFrecuente;
     private boolean activo;
 
-    public Cliente(String nombreCliente, boolean esFrecuente) {
-        this.nombreCliente = nombreCliente;
-        this.esFrecuente = esFrecuente;
-    }
-
+    /**
+     * Método constructor de la clase Cliente
+     * @param nombreCliente
+     * @param esFrecuente
+     * @param activo
+     */
     public Cliente(String nombreCliente, boolean esFrecuente, boolean activo) {
         this.nombreCliente = nombreCliente;
         this.esFrecuente = esFrecuente;
         this.activo = activo;
     }
+
+    //========Getters y Setters========//
 
     public String getNombreCliente() {
         return nombreCliente;
@@ -44,12 +53,5 @@ public class Cliente {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-
-    ///--------Métodos----------//
-    
-
-    
-
-
     
 }
