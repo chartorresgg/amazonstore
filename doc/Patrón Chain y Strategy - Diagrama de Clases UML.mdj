@@ -436,6 +436,24 @@
 									"subViews": [
 										{
 											"_type": "UMLOperationView",
+											"_id": "AAAAAAGWrKIUrteWIlU=",
+											"_parent": {
+												"$ref": "AAAAAAGWrJI12s4L4wo="
+											},
+											"model": {
+												"$ref": "AAAAAAGWrKIUqdeTzKQ="
+											},
+											"font": "Roboto;13;0",
+											"parentStyle": true,
+											"left": 981,
+											"top": 1210,
+											"width": 374.30517578125,
+											"height": 13,
+											"text": "+establecerEstrategia(estrategia: EstrategiaDescuento): void",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
 											"_id": "AAAAAAGWrX69GgRK/TM=",
 											"_parent": {
 												"$ref": "AAAAAAGWrJI12s4L4wo="
@@ -446,7 +464,7 @@
 											"font": "Roboto;13;0",
 											"parentStyle": true,
 											"left": 981,
-											"top": 1210,
+											"top": 1225,
 											"width": 374.30517578125,
 											"height": 13,
 											"text": "+agregarProducto(producto: Producto): void",
@@ -464,7 +482,7 @@
 											"font": "Roboto;13;0",
 											"parentStyle": true,
 											"left": 981,
-											"top": 1225,
+											"top": 1240,
 											"width": 374.30517578125,
 											"height": 13,
 											"text": "+calcularTotalBruto(): double",
@@ -482,28 +500,10 @@
 											"font": "Roboto;13;0",
 											"parentStyle": true,
 											"left": 981,
-											"top": 1240,
-											"width": 374.30517578125,
-											"height": 13,
-											"text": "+calcularTotalConDescuento(): double",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGWrKIUrteWIlU=",
-											"_parent": {
-												"$ref": "AAAAAAGWrJI12s4L4wo="
-											},
-											"model": {
-												"$ref": "AAAAAAGWrKIUqdeTzKQ="
-											},
-											"font": "Roboto;13;0",
-											"parentStyle": true,
-											"left": 981,
 											"top": 1255,
 											"width": 374.30517578125,
 											"height": 13,
-											"text": "+establecerEstrategia(estrategia: EstrategiaDescuento): void",
+											"text": "+calcularTotalConDescuento(): double",
 											"horizontalAlignment": 0
 										}
 									],
@@ -5114,6 +5114,36 @@
 					"operations": [
 						{
 							"_type": "UMLOperation",
+							"_id": "AAAAAAGWrKIUqdeTzKQ=",
+							"_parent": {
+								"$ref": "AAAAAAGWrJI12c4CgCE="
+							},
+							"name": "establecerEstrategia",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGWrKJKutfrl6c=",
+									"_parent": {
+										"$ref": "AAAAAAGWrKIUqdeTzKQ="
+									},
+									"name": "estrategia",
+									"type": {
+										"$ref": "AAAAAAGWrJE17s2+OsI="
+									}
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGWrKJjydkYgg4=",
+									"_parent": {
+										"$ref": "AAAAAAGWrKIUqdeTzKQ="
+									},
+									"type": "void",
+									"direction": "return"
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
 							"_id": "AAAAAAGWrX69BwRHW64=",
 							"_parent": {
 								"$ref": "AAAAAAGWrJI12c4CgCE="
@@ -5176,36 +5206,6 @@
 										"$ref": "AAAAAAGWrKHw8da7CiQ="
 									},
 									"type": "double",
-									"direction": "return"
-								}
-							]
-						},
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAGWrKIUqdeTzKQ=",
-							"_parent": {
-								"$ref": "AAAAAAGWrJI12c4CgCE="
-							},
-							"name": "establecerEstrategia",
-							"parameters": [
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGWrKJKutfrl6c=",
-									"_parent": {
-										"$ref": "AAAAAAGWrKIUqdeTzKQ="
-									},
-									"name": "estrategia",
-									"type": {
-										"$ref": "AAAAAAGWrJE17s2+OsI="
-									}
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGWrKJjydkYgg4=",
-									"_parent": {
-										"$ref": "AAAAAAGWrKIUqdeTzKQ="
-									},
-									"type": "void",
 									"direction": "return"
 								}
 							]

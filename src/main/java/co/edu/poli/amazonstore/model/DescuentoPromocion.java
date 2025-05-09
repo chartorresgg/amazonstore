@@ -1,7 +1,7 @@
 package co.edu.poli.amazonstore.model;
 
 /**
- * Clase que representa una estrategia concreta que aplica un 20% de descuento de promoción.
+ * Clase que representa una estrategia concreta de descuento: Aplica un 20% de descuento de promoción.
  * Esta clase implementa la interfaz EstrategiaDescuento y define el método
  * calcularDescuento para aplicar el descuento correspondiente.
  */

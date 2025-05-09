@@ -35,7 +35,15 @@ public class Pedido {
         this.montoMinimo = montoMinimo;
     }
 
-    ///--------Métodos----------//
+    ///--------Métodos----------///
+    
+    /**
+     * Establece la estrategia de descuento a utilizar para calcular el total del pedido.
+     * @param estrategia La estrategia de descuento a utilizar.
+     */
+    public void establecerEstrategia(EstrategiaDescuento estrategia) {
+        this.estrategia = estrategia;
+    }
 
     /**
      * Agrega un producto a la lista de productos del pedido.
@@ -62,14 +70,6 @@ public class Pedido {
         return calcularTotalBruto() - descuento;
     }
 
-    /**
-     * Establece la estrategia de descuento a utilizar para calcular el total del pedido.
-     * @param estrategia La estrategia de descuento a utilizar.
-     */
-    public void establecerEstrategia(EstrategiaDescuento estrategia) {
-        this.estrategia = estrategia;
-    }
-
     //--------Getters y Setters----------//
     public Cliente getCliente() {
         return cliente;
@@ -90,5 +90,4 @@ public class Pedido {
     public void setMontoMinimo(double montoMinimo) {
         this.montoMinimo = montoMinimo;
     }
-
 }

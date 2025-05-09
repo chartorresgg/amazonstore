@@ -83,20 +83,24 @@ public class Controller {
 
     // Métodos de Strategy
 
+    /**
+     * Método que se ejecuta al seleccionar un cliente en el ComboBox.
+     * Crea un nuevo pedido para el cliente seleccionado y actualiza la etiqueta de cliente frecuente.
+     */
 	private void seleccionarCliente() {
-        String nombre = comboCliente.getValue();
-        Cliente cliente = clientes.get(nombre);
-        labelFrecuente.setText(cliente.esFrecuente() ? "Sí" : "No");
-        pedidoActual = new Pedido(cliente);
-        listViewPedido.getItems().clear();
+        String nombre = comboCliente.getValue(); // Obtener el nombre del cliente seleccionado
+        Cliente cliente = clientes.get(nombre); // Obtener el objeto Cliente correspondiente
+        labelFrecuente.setText(cliente.esFrecuente() ? "Sí" : "No"); // Actualizar la etiqueta de cliente frecuente
+        pedidoActual = new Pedido(cliente); // Crear un nuevo pedido para el cliente seleccionado
+        listViewPedido.getItems().clear(); 
     }
 
     private void agregarProducto() {
-        String seleccionado = listViewProductos.getSelectionModel().getSelectedItem();
-        if (seleccionado != null && pedidoActual != null) {
-            Producto producto = productosDisponibles.get(seleccionado);
-            pedidoActual.agregarProducto(producto);
-            listViewPedido.getItems().add(seleccionado);
+        String seleccionado = listViewProductos.getSelectionModel().getSelectedItem(); // Obtener el producto seleccionado
+        if (seleccionado != null && pedidoActual != null) { // Verificar que haya un producto seleccionado y que el pedido no sea nulo
+            Producto producto = productosDisponibles.get(seleccionado); // Obtener el objeto Producto correspondiente
+            pedidoActual.agregarProducto(producto); // Agregar el producto al pedido actual
+            listViewPedido.getItems().add(seleccionado); // Agregar el nombre del producto a la lista de productos del pedido
         }
     }
 
@@ -108,26 +112,30 @@ public class Controller {
         }
     }
 
+    /*
+     * Método que calcula el total del pedido actual aplicando la estrategia de descuento seleccionada.
+     * Actualiza las etiquetas de bruto, descuento y total con los valores calculados.
+     */
     private void calcularTotal() {
         if (pedidoActual == null) return;
 
-        String estrategia = comboEstrategia.getValue();
+        String estrategia = comboEstrategia.getValue(); // Obtener la estrategia seleccionada
         switch (estrategia) {
             case "Cliente Frecuente":
-                pedidoActual.establecerEstrategia(new DescuentoClienteFrecuente());
+                pedidoActual.establecerEstrategia(new DescuentoClienteFrecuente()); // Aplicar estrategia de descuento para cliente frecuente
                 break;
             case "Promoción":
-                pedidoActual.establecerEstrategia(new DescuentoPromocion());
+                pedidoActual.establecerEstrategia(new DescuentoPromocion()); // Aplicar estrategia de descuento por promoción
                 break;
             case "Sin Descuento":
             default:
-                pedidoActual.establecerEstrategia(new SinDescuento());
+                pedidoActual.establecerEstrategia(new SinDescuento()); // No aplicar descuento
                 break;
         }
 
-        double bruto = pedidoActual.calcularTotalBruto();
-        double descuento = pedidoActual.getEstrategia().calcularDescuento(pedidoActual);
-        double total = pedidoActual.calcularTotalConDescuento();
+        double bruto = pedidoActual.calcularTotalBruto(); // Calcular el total bruto del pedido
+        double descuento = pedidoActual.getEstrategia().calcularDescuento(pedidoActual); // Calcular el descuento aplicado
+        double total = pedidoActual.calcularTotalConDescuento(); // Calcular el total después de aplicar el descuento
 
         labelBruto.setText(String.format("$ %.2f", bruto));
         labelDescuento.setText(String.format("$ %.2f", descuento));
