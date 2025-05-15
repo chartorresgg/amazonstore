@@ -42,6 +42,14 @@ public class Order implements ElementStore {
         this.products.add(products);
     }
 
+    public double getTotal() {
+        double total = 0;
+        for (Product p : products) {
+            total += p.getPrice();
+        }
+        return total;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visitOrder(this);
