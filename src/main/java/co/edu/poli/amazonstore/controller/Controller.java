@@ -1,203 +1,113 @@
 package co.edu.poli.amazonstore.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import co.edu.poli.amazonstore.model.Cliente;
-import co.edu.poli.amazonstore.model.DescuentoClienteFrecuente;
-import co.edu.poli.amazonstore.model.DescuentoPromocion;
-import co.edu.poli.amazonstore.model.ManejadorPedido;
-import co.edu.poli.amazonstore.model.Pedido;
-import co.edu.poli.amazonstore.model.Producto;
-import co.edu.poli.amazonstore.model.SinDescuento;
-import co.edu.poli.amazonstore.model.ValidadorClienteActivo;
-import co.edu.poli.amazonstore.model.ValidadorMontoMinimo;
-import co.edu.poli.amazonstore.model.ValidadorStock;
+import co.edu.poli.amazonstore.model.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-
+import javafx.scene.control.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
 
-    // Componentes de Strategy
+    @FXML
+    private TextField txtNombreCliente;
+    @FXML
+    private TextField txtCorreoCliente;
+    @FXML
+    private ListView<String> lvProductos;
+    @FXML
+    private TextArea txtDetallePedido, txtResultado;
+    @FXML
+    private Label lblTotal;
+    @FXML
+    private Button btnAgregarProducto;
+    @FXML
+    private Button btnReporte;
+    @FXML
+    private Button btnDescuento;
+    @FXML
+    private Button btnNuevoPedido;
 
-	@FXML private ComboBox<String> comboCliente;
-    @FXML private Label labelFrecuente;
-    @FXML private ListView<String> listViewProductos;
-    @FXML private ListView<String> listViewPedido;
-    @FXML private ComboBox<String> comboEstrategia;
-    @FXML private Button btnAgregar, btnQuitar, btnCalcular;
-    @FXML private Label labelBruto, labelDescuento, labelTotal;
+    private List<Product> listaProductos, listaProductosOriginales;
+    private Order pedido;
 
-    // Componentes de Chain of Responsibility
+    @FXML
+    public void initialize() {
+        // Inicializar productos
+        listaProductos = new ArrayList<>();
+        listaProductos.add(new Product("Laptop", 2000));
+        listaProductos.add(new Product("Mouse", 50));
+        listaProductos.add(new Product("Teclado", 80));
 
-    @FXML private CheckBox chkValidarProductos;
-    @FXML private CheckBox chkValidarMontoMinimo;
-    @FXML private CheckBox chkValidarClienteActivo;
-    @FXML private TextField txtMontoMinimo;
-    @FXML private Button btnValidar;
-    @FXML private Label labelEstadoValidacion;
-    @FXML private ListView<String> listViewLogValidacion;
+        // Mostrar productos
+        for (Product p : listaProductos) {
+            lvProductos.getItems().add(p.getNameProduct());
+        }
 
+        // Inicializar copia original de productos ANTES de llamar a nuevoPedido
+        listaProductosOriginales = new ArrayList<>();
+        for (Product p : listaProductos) {
+            listaProductosOriginales.add(new Product(p.getNameProduct(), p.getPrice()));
+        }
 
-	private Map<String, Producto> productosDisponibles = new HashMap<>();
-    private Map<String, Cliente> clientes = new HashMap<>();
-    private Pedido pedidoActual;
-
-	@FXML
-	public void initialize() {
-
-		Cliente ana = new Cliente("Ana", true, true);
-        Cliente juan = new Cliente("Juan", false, false);
-        clientes.put(ana.getNombreCliente(), ana);
-        clientes.put(juan.getNombreCliente(), juan);
-        comboCliente.getItems().addAll(clientes.keySet());
-
-        // Productos
-        productosDisponibles.put("Libro", new Producto("Libro", 100.0, 10));
-        productosDisponibles.put("Agenda", new Producto("Agenda", 50.0, 0));
-        productosDisponibles.put("Cuaderno", new Producto("Cuaderno", 30.0, 20));
-        listViewProductos.getItems().addAll(productosDisponibles.keySet());
-
-        // Estrategias
-        comboEstrategia.getItems().addAll("Cliente Frecuente", "Promoción", "Sin Descuento");
-
-        // Eventos
-        comboCliente.setOnAction(e -> seleccionarCliente());
-        btnAgregar.setOnAction(e -> agregarProducto());
-        btnQuitar.setOnAction(e -> quitarProducto());
-        btnCalcular.setOnAction(e -> {
-            if (pedidoActual != null) {
-                validarPedido(pedidoActual);  // Validación previa
-                calcularTotal();  // Solo si la validación fue exitosa
-            }
-        });
-        btnValidar.setOnAction(e -> validarPedido(pedidoActual));
-
-	}
-
-    // Métodos de Strategy
-
-    /**
-     * Método que se ejecuta al seleccionar un cliente en el ComboBox.
-     * Crea un nuevo pedido para el cliente seleccionado y actualiza la etiqueta de cliente frecuente.
-     */
-	private void seleccionarCliente() {
-        String nombre = comboCliente.getValue(); // Obtener el nombre del cliente seleccionado
-        Cliente cliente = clientes.get(nombre); // Obtener el objeto Cliente correspondiente
-        labelFrecuente.setText(cliente.esFrecuente() ? "Sí" : "No"); // Actualizar la etiqueta de cliente frecuente
-        pedidoActual = new Pedido(cliente); // Crear un nuevo pedido para el cliente seleccionado
-        listViewPedido.getItems().clear(); 
+        nuevoPedido(); // ✅ ahora sí puede usarse
     }
 
+    @FXML
     private void agregarProducto() {
-        String seleccionado = listViewProductos.getSelectionModel().getSelectedItem(); // Obtener el producto seleccionado
-        if (seleccionado != null && pedidoActual != null) { // Verificar que haya un producto seleccionado y que el pedido no sea nulo
-            Producto producto = productosDisponibles.get(seleccionado); // Obtener el objeto Producto correspondiente
-            pedidoActual.agregarProducto(producto); // Agregar el producto al pedido actual
-            listViewPedido.getItems().add(seleccionado); // Agregar el nombre del producto a la lista de productos del pedido
+        int index = lvProductos.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            Product producto = listaProductos.get(index);
+            pedido.agregarProducto(producto);
+            actualizarDetalle();
         }
     }
 
-    private void quitarProducto() {
-        String seleccionado = listViewPedido.getSelectionModel().getSelectedItem();
-        if (seleccionado != null && pedidoActual != null) {
-            listViewPedido.getItems().remove(seleccionado);
-            pedidoActual.getProductos().removeIf(p -> p.getNombreProducto().equals(seleccionado));
+    @FXML
+    private void generarReporte() {
+        if (pedido == null)
+            return;
+
+        ReportVisitor visitor = new ReportVisitor();
+        pedido.accept(visitor); // El pedido, cliente y productos aceptan el visitor
+
+        txtResultado.setText(visitor.obtenerReporte());
+    }
+
+    @FXML
+    private void aplicarDescuento() {
+        if (pedido == null)
+            return;
+
+        DiscountVisitor descuento = new DiscountVisitor();
+        pedido.accept(descuento);
+
+        txtResultado.setText("Descuento del 10% aplicado a todos los productos.");
+        actualizarDetalle();
+    }
+
+    @FXML
+    private void nuevoPedido() {
+        Client cliente = new Client(txtNombreCliente.getText(), txtCorreoCliente.getText());
+        pedido = new Order((int) (Math.random() * 10000), cliente);
+        txtDetallePedido.clear();
+        lblTotal.setText("Total: $0");
+
+        listaProductos.clear();
+        for (Product p : listaProductosOriginales) {
+            listaProductos.add(new Product(p.getNameProduct(), p.getPrice()));
         }
     }
 
-    /*
-     * Método que calcula el total del pedido actual aplicando la estrategia de descuento seleccionada.
-     * Actualiza las etiquetas de bruto, descuento y total con los valores calculados.
-     */
-    private void calcularTotal() {
-        if (pedidoActual == null) return;
+    private void actualizarDetalle() {
+        StringBuilder sb = new StringBuilder();
+        double total = 0;
 
-        String estrategia = comboEstrategia.getValue(); // Obtener la estrategia seleccionada
-        switch (estrategia) {
-            case "Cliente Frecuente":
-                pedidoActual.establecerEstrategia(new DescuentoClienteFrecuente()); // Aplicar estrategia de descuento para cliente frecuente
-                break;
-            case "Promoción":
-                pedidoActual.establecerEstrategia(new DescuentoPromocion()); // Aplicar estrategia de descuento por promoción
-                break;
-            case "Sin Descuento":
-            default:
-                pedidoActual.establecerEstrategia(new SinDescuento()); // No aplicar descuento
-                break;
+        for (Product p : pedido.getProducts()) {
+            sb.append(p.getNameProduct()).append(" - $").append(p.getPrice()).append("\n");
+            total += p.getPrice();
         }
 
-        double bruto = pedidoActual.calcularTotalBruto(); // Calcular el total bruto del pedido
-        double descuento = pedidoActual.getEstrategia().calcularDescuento(pedidoActual); // Calcular el descuento aplicado
-        double total = pedidoActual.calcularTotalConDescuento(); // Calcular el total después de aplicar el descuento
-
-        labelBruto.setText(String.format("$ %.2f", bruto));
-        labelDescuento.setText(String.format("$ %.2f", descuento));
-        labelTotal.setText(String.format("$ %.2f", total));
+        txtDetallePedido.setText(sb.toString());
+        lblTotal.setText("Total: $" + total);
     }
-
-    // Métodos de Chain of Responsibility	
-
-     public void validarPedido(Pedido pedido) {
-    listViewLogValidacion.getItems().clear();
-
-    try {
-        ManejadorPedido primero = null;
-        ManejadorPedido actual = null;
-
-        if (chkValidarClienteActivo.isSelected()) {
-            actual = new ValidadorClienteActivo();
-            primero = actual;
-            listViewLogValidacion.getItems().add("✔ Validador Cliente Activo agregado.");
-        }
-
-        if (chkValidarMontoMinimo.isSelected()) {
-            if (txtMontoMinimo.getText().isEmpty()) {
-                throw new RuntimeException("Debe ingresar el monto mínimo.");
-            }
-            double montoMin = Double.parseDouble(txtMontoMinimo.getText());
-            pedido.setMontoMinimo(montoMin);
-
-            ManejadorPedido nuevo = new ValidadorMontoMinimo();
-            if (primero == null) {
-                primero = nuevo;
-            } else {
-                actual.setSiguiente(nuevo);
-            }
-            actual = nuevo;
-            listViewLogValidacion.getItems().add("✔ Validador Monto Mínimo agregado.");
-        }
-
-        if (chkValidarProductos.isSelected()) {
-            ManejadorPedido nuevo = new ValidadorStock();
-            if (primero == null) {
-                primero = nuevo;
-            } else {
-                actual.setSiguiente(nuevo);
-            }
-            actual = nuevo;
-            listViewLogValidacion.getItems().add("✔ Validador Stock agregado.");
-        }
-
-        if (primero == null) {
-            throw new RuntimeException("Seleccione al menos un validador.");
-        }
-
-        primero.procesar(pedido);
-
-        labelEstadoValidacion.setText("✅ Pedido validado exitosamente.");
-        listViewLogValidacion.getItems().add("✅ Validación completada con éxito.");
-    } catch (RuntimeException e) {
-        labelEstadoValidacion.setText("❌ " + e.getMessage());
-        listViewLogValidacion.getItems().add("❌ Error: " + e.getMessage());
-    }
-}
-
-
 }

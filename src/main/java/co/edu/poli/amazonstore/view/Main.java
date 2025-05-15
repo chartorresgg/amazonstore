@@ -14,9 +14,9 @@ import javafx.stage.Stage;
  */
 
 public class Main extends Application {
-	
+
 	private static Scene scene;
-	
+
 	@Override
 	public void start(Stage stage) throws IOException {
 
@@ -24,7 +24,7 @@ public class Main extends Application {
 				.load(getClass().getResource("/co/edu/poli/amazonstore/view/form.fxml"));
 		scene = new Scene(root);
 		stage.setScene(scene);
-		stage.setTitle("Amazon Store: Tienda de productos");
+		stage.setTitle("Amazon Store: Visitor and State Patterns");
 		stage.show();
 	}
 
