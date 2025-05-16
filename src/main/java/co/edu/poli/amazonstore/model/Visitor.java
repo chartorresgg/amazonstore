@@ -11,6 +11,6 @@ public interface Visitor {
 
     void visitProduct(Product product); // Método para visitar un producto
 
-    void visitOrder(Order order); // 
+    void visitOrder(Order order);  // Método para visitar un pedido
 
 }

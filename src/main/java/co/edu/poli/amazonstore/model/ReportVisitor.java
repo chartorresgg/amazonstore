@@ -55,6 +55,10 @@ public class ReportVisitor implements Visitor {
         }
     }
 
+    /**
+     * Método para obtener el reporte generado.
+     * @return
+     */
     public String obtenerReporte() {
         return report.toString().trim() + "\n";
     }
