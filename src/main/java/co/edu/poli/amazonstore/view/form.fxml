@@ -34,5 +34,7 @@
       <TextArea fx:id="txtResultado" layoutX="49.0" layoutY="406.0" prefHeight="155.0" prefWidth="440.0" />
       <Separator layoutX="48.0" layoutY="292.0" prefHeight="3.0" prefWidth="440.0" />
       <Button fx:id="btnImpuesto" layoutX="358.0" layoutY="352.0" mnemonicParsing="false" onAction="#calcularImpuesto" text="Aplicar impuesto" />
+      <Button fx:id="btnAvanzarEstado" layoutX="52.0" layoutY="585.0" mnemonicParsing="false" onAction="#avanzarEstadoPedido" text="Avanzar Estado" />
+      <Label fx:id="lblEstado" layoutX="48.0" layoutY="650.0" text="Estado: -" />
    </children>
 </AnchorPane>

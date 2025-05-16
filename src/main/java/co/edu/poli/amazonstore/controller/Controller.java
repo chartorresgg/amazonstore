@@ -27,15 +27,10 @@ public class Controller {
     @FXML
     private TextArea txtDetallePedido, txtResultado;
     @FXML
-    private Label lblTotal;
+    private Label lblTotal, lblEstado;
     @FXML
-    private Button btnAgregarProducto;
-    @FXML
-    private Button btnReporte;
-    @FXML
-    private Button btnDescuento;
-    @FXML
-    private Button btnNuevoPedido, btnImpuesto;
+    private Button btnAgregarProducto, btnReporte, btnDescuento, 
+                    btnNuevoPedido, btnImpuesto, btnAvanzarEstado;
 
     private List<Product> listaProductos, listaProductosOriginales;
     private Order pedido;
@@ -117,6 +112,7 @@ txtResultado.setText(reporteConTotal);
         pedido = new Order((int) (Math.random() * 10000), cliente);
         txtDetallePedido.clear();
         lblTotal.setText("Total: $0");
+        lblEstado.setText("Estado: " + pedido.obtenerEstado()); // NUEVO
 
         // Restaurar productos originales
         listaProductos.clear();
@@ -153,6 +149,16 @@ txtResultado.setText(reporteConTotal);
         txtResultado.setText("Total de impuestos (19%): $" + impuesto);
         actualizarDetalle();
 
+}
+
+@FXML
+private void avanzarEstadoPedido() {
+    if (pedido != null) {
+        pedido.avanzarEstado();
+        txtResultado.setText("Estado actual: " + pedido.obtenerEstado());
+        lblEstado.setText("Estado: " + pedido.obtenerEstado()); // Actualiza el Label también
+        actualizarDetalle();
+    }
 }
 
 }

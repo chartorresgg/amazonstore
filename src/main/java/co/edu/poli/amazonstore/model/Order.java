@@ -13,10 +13,12 @@ public class Order implements ElementStore {
     private List<Product> products = new ArrayList<>();
     private int id;
     private Client client;
+    private OrderState state;
 
     public Order(int id, Client client) {
         this.id = id;
         this.client = client;
+        this.state = new EstadoNuevo();
     }
 
     public List<Product> getProducts() {
@@ -68,4 +70,25 @@ public class Order implements ElementStore {
         visitor.visitOrder(this);
     }
 
+    // ============= State Pattern ==============
+
+    public void setState(OrderState state) {
+        this.state = state;
+    }
+
+    public OrderState getState() {
+        return state;
+    }
+
+    public void avanzarEstado() {
+        state.avanzarEstado(this);
+    }
+
+    public void addProduct(Product product) {
+        addProduct(product);
+    }
+
+    public String obtenerEstado() {
+        return state.obtenerEstado();
+    }
 }
