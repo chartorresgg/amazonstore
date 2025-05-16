@@ -11,53 +11,23 @@ import java.util.List;
 public class Order implements ElementStore {
 
     private List<Product> products = new ArrayList<>();
-    private int id;
     private Client client;
     private OrderState state;
+    private int id;
 
+    /**
+     * Constructor de la clase Order.
+     * 
+     * @param id El ID del pedido.
+     * @param client El cliente asociado al pedido.
+     */
     public Order(int id, Client client) {
         this.id = id;
         this.client = client;
         this.state = new EstadoNuevo();
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    
-    public void agregarProducto(Product products) {
-        this.products.add(products);
-    }
-
-    public double getTotal() {
-    double total = 0;
-    for (Product p : products) {
-        total += p.getPriceWithTax();
-    }
-    return total;
-}
-
+    //============ Visitor Pattern ==============
 
     /**
      * Método para aceptar un visitante.
@@ -70,7 +40,63 @@ public class Order implements ElementStore {
         visitor.visitOrder(this);
     }
 
+    /** 
+     * Método para agregar un producto al pedido.
+     */
+    public void addProduct(Product product) {
+        state.addProduct(this, product);
+    
+    }
+
+    /**
+     * Método para obtener el total del pedido.
+     * Este método calcula el total sumando los precios de todos los productos
+     * @return
+     */
+    public double getTotal() {
+        double total = 0;
+        for (Product p : products) {
+            total += p.getPriceWithTax();
+        }
+        return total;
+    }
+    
     // ============= State Pattern ==============
+
+    /**
+     * Método para avanzar el estado del pedido.
+     * Este método utiliza el patrón State para cambiar el estado del pedido.
+     */
+    public void avanzarEstado() {
+        state.avanzarEstado(this);
+    }
+
+    /**
+     * Método para obtener el estado del pedido.
+     * 
+     * @return El estado actual del pedido.
+     */
+    public String obtenerEstado() {
+        return state.obtenerEstado();
+    }
+
+    //============= Getters y Setters ==============
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     public void setState(OrderState state) {
         this.state = state;
@@ -80,15 +106,11 @@ public class Order implements ElementStore {
         return state;
     }
 
-    public void avanzarEstado() {
-        state.avanzarEstado(this);
+    public int getId() {
+        return id;
     }
 
-    public void addProduct(Product product) {
-        addProduct(product);
-    }
-
-    public String obtenerEstado() {
-        return state.obtenerEstado();
+    public void setId(int id) {
+        this.id = id;
     }
 }

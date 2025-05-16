@@ -10,11 +10,29 @@ public class Client implements ElementStore {
     private String nameClient;
     private String email;
 
+    /**
+     * Constructor de la clase Client.
+     * 
+     * @param nameClient El nombre del cliente.
+     * @param email El correo electrónico del cliente.
+     */
     public Client(String nameClient, String email) {
         this.nameClient = nameClient;
         this.email = email;
     }
 
+    //============ Visitor Pattern ==============
+    /**
+     * Método accept que permite a un Visitor visitar este cliente.
+     * 
+     * @param visitor El Visitor que visita este cliente.
+     */
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visitClient(this);
+    }
+
+    //============ Getters and Setters ==============
     public String getNameClient() {
         return nameClient;
     }
@@ -29,16 +47,6 @@ public class Client implements ElementStore {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * Método accept que permite a un Visitor visitar este cliente.
-     * 
-     * @param visitor El Visitor que visita este cliente.
-     */
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visitClient(this);
     }
 
     @Override

@@ -67,7 +67,7 @@ public class Controller {
         int index = lvProductos.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
             Product producto = listaProductos.get(index);
-            pedido.agregarProducto(producto);
+            pedido.addProduct(producto);
             actualizarDetalle();
         }
     }

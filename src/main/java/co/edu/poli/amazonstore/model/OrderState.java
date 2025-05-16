@@ -1,5 +1,8 @@
 package co.edu.poli.amazonstore.model;
 
+/**
+ * 
+ */
 public interface OrderState {
 
     void addProduct(Order order, Product product);
