@@ -8,6 +8,7 @@ import co.edu.poli.amazonstore.model.DiscountVisitor;
 import co.edu.poli.amazonstore.model.Order;
 import co.edu.poli.amazonstore.model.Product;
 import co.edu.poli.amazonstore.model.ReportVisitor;
+import co.edu.poli.amazonstore.model.TaxVisitor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,7 +35,7 @@ public class Controller {
     @FXML
     private Button btnDescuento;
     @FXML
-    private Button btnNuevoPedido;
+    private Button btnNuevoPedido, btnImpuesto;
 
     private List<Product> listaProductos, listaProductosOriginales;
     private Order pedido;
@@ -42,27 +43,28 @@ public class Controller {
     @FXML
     public void initialize() {
         listaProductos = new ArrayList<>();
-    listaProductos.add(new Product("Laptop", 2000));
-    listaProductos.add(new Product("Mouse", 50));
-    listaProductos.add(new Product("Teclado", 80));
+    listaProductos.add(new Product("Laptop", 2000, 0));
+    listaProductos.add(new Product("Mouse", 50, 0));
+    listaProductos.add(new Product("Teclado", 80, 0));
     btnAgregarProducto.setDisable(true);
 
 
-    // Mostrar productos
+     // Mostrar en la lista visual
     for (Product p : listaProductos) {
         lvProductos.getItems().add(p.getNameProduct());
     }
 
-    // Inicializar copia original de productos
+    // Crear una copia de productos originales para restauración posterior
     listaProductosOriginales = new ArrayList<>();
     for (Product p : listaProductos) {
-        listaProductosOriginales.add(new Product(p.getNameProduct(), p.getPrice()));
+        listaProductosOriginales.add(new Product(p.getNameProduct(), p.getPrice(), p.getTaxAmount()));
     }
     }
 
     @FXML
     private void agregarProducto() {
         if (pedido == null) {
+    
             txtResultado.setText("Primero debe crear un pedido.");
             return;
         }
@@ -83,8 +85,9 @@ public class Controller {
         ReportVisitor visitor = new ReportVisitor();
         pedido.accept(visitor); // El pedido, cliente y productos aceptan el visitor
 
-        String reporteConTotal = visitor.obtenerReporte() + "\n\nTOTAL DEL PEDIDO: $" + pedido.getTotal();
-        txtResultado.setText(reporteConTotal);
+        String reporteConTotal = visitor.obtenerReporte()
+    + "\nTOTAL CON IMPUESTOS: $" + pedido.getTotal();
+txtResultado.setText(reporteConTotal);
     }
 
     @FXML
@@ -118,7 +121,7 @@ public class Controller {
         // Restaurar productos originales
         listaProductos.clear();
         for (Product p : listaProductosOriginales) {
-            listaProductos.add(new Product(p.getNameProduct(), p.getPrice()));
+            listaProductos.add(new Product(p.getNameProduct(), p.getPrice(), p.getTaxAmount()));
         }
 
         txtResultado.setText("Nuevo pedido creado para " + nombre + " (" + correo + ")");
@@ -128,10 +131,28 @@ public class Controller {
         StringBuilder sb = new StringBuilder();
 
         for (Product p : pedido.getProducts()) {
-            sb.append(p.getNameProduct()).append(" - $").append(p.getPrice()).append("\n");
-        }
+    sb.append(p.getNameProduct())
+      .append(" - $").append(p.getPrice())
+      .append(" + Impuesto: $").append(p.getTaxAmount())
+      .append(" = Total: $").append(p.getPriceWithTax())
+      .append("\n");
+}
 
         txtDetallePedido.setText(sb.toString());
         lblTotal.setText("Total: $" + pedido.getTotal());
     }
+
+    @FXML
+    private void calcularImpuesto() {
+        if (pedido == null) return;
+
+        TaxVisitor taxVisitor = new TaxVisitor();
+        pedido.accept(taxVisitor);  // Recorre cliente y productos, suma impuestos
+
+        double impuesto = taxVisitor.getTotalTax();
+        txtResultado.setText("Total de impuestos (19%): $" + impuesto);
+        actualizarDetalle();
+
+}
+
 }

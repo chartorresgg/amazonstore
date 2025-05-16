@@ -1,5 +1,10 @@
 package co.edu.poli.amazonstore.model;
 
+/**
+ * Clase Client que representa un cliente en el sistema.
+ * Implementa la interfaz ElementStore para permitir la visita de un Visitor.
+ * Contiene información sobre el nombre y el correo electrónico del cliente.
+ */
 public class Client implements ElementStore {
 
     private String nameClient;
@@ -26,6 +31,11 @@ public class Client implements ElementStore {
         this.email = email;
     }
 
+    /**
+     * Método accept que permite a un Visitor visitar este cliente.
+     * 
+     * @param visitor El Visitor que visita este cliente.
+     */
     @Override
     public void accept(Visitor visitor) {
         visitor.visitClient(this);

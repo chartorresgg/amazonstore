@@ -3,6 +3,11 @@ package co.edu.poli.amazonstore.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representa un pedido que puede aceptar visitantes.
+ * Implementa la interfaz ElementStore.
+ * Contiene una lista de productos, un ID y un cliente asociado al pedido.
+ */
 public class Order implements ElementStore {
 
     private List<Product> products = new ArrayList<>();
@@ -38,18 +43,26 @@ public class Order implements ElementStore {
         this.client = client;
     }
 
+    
     public void agregarProducto(Product products) {
         this.products.add(products);
     }
 
     public double getTotal() {
-        double total = 0;
-        for (Product p : products) {
-            total += p.getPrice();
-        }
-        return total;
+    double total = 0;
+    for (Product p : products) {
+        total += p.getPriceWithTax();
     }
+    return total;
+}
 
+
+    /**
+     * Método para aceptar un visitante.
+     * Este método es parte de la implementación del patrón Visitor.
+     *
+     * @param visitor El visitante que visitará este elemento.
+     */
     @Override
     public void accept(Visitor visitor) {
         visitor.visitOrder(this);
