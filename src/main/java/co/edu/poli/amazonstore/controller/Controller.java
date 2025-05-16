@@ -25,7 +25,7 @@ public class Controller {
     @FXML
     private ListView<String> lvProductos;
     @FXML
-    private TextArea txtDetallePedido, txtResultado;
+    private TextArea txtDetallePedido, txtResultado, txtHistorialEstados;
     @FXML
     private Label lblTotal, lblEstado;
     @FXML
@@ -206,5 +206,21 @@ public class Controller {
         txtDetallePedido.setText(sb.toString());
         lblTotal.setText("Total: $" + pedido.getTotal());
     }
+
+    @FXML
+private void verHistorialEstados() {
+    if (pedido == null) {
+        txtHistorialEstados.setText("No hay pedido para mostrar historial.");
+        return;
+    }
+
+    StringBuilder sb = new StringBuilder("Historial de Estados del Pedido:\n");
+    int paso = 1;
+    for (String estado : pedido.getHistorialEstados()) {
+        sb.append(paso++).append(". ").append(estado).append("\n");
+    }
+
+    txtHistorialEstados.setText(sb.toString());
+}
 
 }

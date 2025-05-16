@@ -14,6 +14,7 @@ public class Order implements ElementStore {
     private Client client;
     private OrderState state;
     private int id;
+    private List<String> historialEstados;
 
     /**
      * Constructor de la clase Order.
@@ -24,7 +25,10 @@ public class Order implements ElementStore {
     public Order(int id, Client client) {
         this.id = id;
         this.client = client;
+        this.products = new ArrayList<>();
         this.state = new EstadoNuevo();
+        this.historialEstados = new ArrayList<>();
+        historialEstados.add(state.obtenerEstado());
     }
 
     //============ Visitor Pattern ==============
@@ -60,7 +64,7 @@ public class Order implements ElementStore {
         }
         return total;
     }
-    
+
     // ============= State Pattern ==============
 
     /**
@@ -69,6 +73,11 @@ public class Order implements ElementStore {
      */
     public void avanzarEstado() {
         state.avanzarEstado(this);
+        historialEstados.add(state.obtenerEstado()); // Guarda el nuevo estado en el historial
+    }
+
+    public List<String> getHistorialEstados() {
+        return historialEstados;
     }
 
     /**

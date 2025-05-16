@@ -34,13 +34,15 @@
       <TextArea fx:id="txtResultado" layoutX="50.0" layoutY="406.0" prefHeight="155.0" prefWidth="440.0" />
       <Separator layoutX="50.0" layoutY="328.0" prefHeight="3.0" prefWidth="440.0" />
       <Button fx:id="btnImpuesto" layoutX="71.0" layoutY="352.0" mnemonicParsing="false" onAction="#calcularImpuesto" text="Aplicar impuesto" />
-      <Button fx:id="btnAvanzarEstado" layoutX="50.0" layoutY="644.0" mnemonicParsing="false" onAction="#avanzarEstadoPedido" text="Avanzar Estado" />
-      <Label fx:id="lblEstado" layoutX="190.0" layoutY="648.0" text="Estado: -" />
-      <Label layoutX="50.0" layoutY="599.0" text="Patrón: State">
+      <Button fx:id="btnAvanzarEstado" layoutX="49.0" layoutY="613.0" mnemonicParsing="false" onAction="#avanzarEstadoPedido" text="Avanzar Estado" />
+      <Label fx:id="lblEstado" layoutX="48.0" layoutY="656.0" text="Estado: -" />
+      <Label layoutX="53.0" layoutY="584.0" text="Patrón: State">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
       <Separator layoutX="49.0" layoutY="573.0" prefWidth="440.0" />
+      <Button fx:id="btnVerHistorial" layoutX="283.0" layoutY="613.0" mnemonicParsing="false" onAction="#verHistorialEstados" text="Mostrar historial" />
+      <TextArea fx:id="txtHistorialEstados" layoutX="287.0" layoutY="648.0" prefHeight="108.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

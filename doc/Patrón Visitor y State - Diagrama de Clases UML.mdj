@@ -512,7 +512,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 6384,
-											"top": 3200,
+											"top": 3232,
 											"height": 13
 										},
 										{
@@ -524,7 +524,7 @@
 											"font": "Arial;13;1",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2151,
+											"top": 2167,
 											"width": 199,
 											"height": 13,
 											"text": "Product"
@@ -539,7 +539,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 6384,
-											"top": 3200,
+											"top": 3232,
 											"width": 73.67724609375,
 											"height": 13,
 											"text": "(from Model)"
@@ -554,7 +554,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 6384,
-											"top": 3200,
+											"top": 3232,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
@@ -562,7 +562,7 @@
 									"font": "Arial;13;0",
 									"parentStyle": true,
 									"left": 3328,
-									"top": 2144,
+									"top": 2160,
 									"width": 209,
 									"height": 25,
 									"stereotypeLabel": {
@@ -600,7 +600,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2174,
+											"top": 2190,
 											"width": 199,
 											"height": 13,
 											"text": "-nameProduct: String",
@@ -618,7 +618,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2189,
+											"top": 2205,
 											"width": 199,
 											"height": 13,
 											"text": "-price: double",
@@ -636,7 +636,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2204,
+											"top": 2220,
 											"width": 199,
 											"height": 13,
 											"text": "-taxAmount: double",
@@ -646,7 +646,7 @@
 									"font": "Arial;13;0",
 									"parentStyle": true,
 									"left": 3328,
-									"top": 2169,
+									"top": 2185,
 									"width": 209,
 									"height": 53
 								},
@@ -672,7 +672,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2227,
+											"top": 2243,
 											"width": 199,
 											"height": 13,
 											"text": "+accept(visitor: Visitor): void",
@@ -690,7 +690,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2242,
+											"top": 2258,
 											"width": 199,
 											"height": 13,
 											"text": "+getPriceWithTax(): double",
@@ -700,7 +700,7 @@
 									"font": "Arial;13;0",
 									"parentStyle": true,
 									"left": 3328,
-									"top": 2222,
+									"top": 2238,
 									"width": 209,
 									"height": 38
 								},
@@ -717,7 +717,7 @@
 									"font": "Arial;13;0",
 									"parentStyle": true,
 									"left": 3472,
-									"top": 1560,
+									"top": 1576,
 									"width": 10,
 									"height": 10
 								},
@@ -734,7 +734,7 @@
 									"font": "Arial;13;0",
 									"parentStyle": true,
 									"left": 3472,
-									"top": 1560,
+									"top": 1576,
 									"width": 10,
 									"height": 10
 								}
@@ -743,7 +743,7 @@
 							"parentStyle": false,
 							"containerChangeable": true,
 							"left": 3328,
-							"top": 2144,
+							"top": 2160,
 							"width": 208,
 							"height": 116,
 							"nameCompartment": {
@@ -939,6 +939,24 @@
 											"height": 13,
 											"text": "-id: int",
 											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGW2pZ4fdLQo88=",
+											"_parent": {
+												"$ref": "AAAAAAGWzMWHcRzSbio="
+											},
+											"model": {
+												"$ref": "AAAAAAGW2pZ4ZtLNfPE="
+											},
+											"font": "Arial;13;0",
+											"parentStyle": true,
+											"left": 3333,
+											"top": 2026,
+											"width": 199,
+											"height": 13,
+											"text": "-historialEstados: List<String>",
+											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
@@ -946,7 +964,7 @@
 									"left": 3328,
 									"top": 1961,
 									"width": 209,
-									"height": 68
+									"height": 83
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -970,7 +988,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2034,
+											"top": 2049,
 											"width": 199,
 											"height": 13,
 											"text": "+accept(visitor: Visitor): void",
@@ -988,7 +1006,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2049,
+											"top": 2064,
 											"width": 199,
 											"height": 13,
 											"text": "+addProduct(product: Producto)",
@@ -1006,7 +1024,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2064,
+											"top": 2079,
 											"width": 199,
 											"height": 13,
 											"text": "+getTotal(): double",
@@ -1024,7 +1042,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2079,
+											"top": 2094,
 											"width": 199,
 											"height": 13,
 											"text": "+avanzarEstado(): void",
@@ -1042,7 +1060,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 3333,
-											"top": 2094,
+											"top": 2109,
 											"width": 199,
 											"height": 13,
 											"text": "+obtenerEstado(): String",
@@ -1052,7 +1070,7 @@
 									"font": "Arial;13;0",
 									"parentStyle": true,
 									"left": 3328,
-									"top": 2029,
+									"top": 2044,
 									"width": 209,
 									"height": 83
 								},
@@ -1097,7 +1115,7 @@
 							"left": 3328,
 							"top": 1936,
 							"width": 208,
-							"height": 176,
+							"height": 192,
 							"nameCompartment": {
 								"$ref": "AAAAAAGWzMWHcRzNNR8="
 							},
@@ -6089,6 +6107,16 @@
 							"name": "id",
 							"visibility": "private",
 							"type": "int"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGW2pZ4ZtLNfPE=",
+							"_parent": {
+								"$ref": "AAAAAAGWzMWHcRzKVr0="
+							},
+							"name": "historialEstados",
+							"visibility": "private",
+							"type": "List<String>"
 						}
 					],
 					"operations": [
